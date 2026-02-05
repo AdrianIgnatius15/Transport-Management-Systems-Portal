@@ -1,0 +1,5 @@
+1. Login (optional in MVP)
+2. Create orders
+3. Track orders (public tracking page)
+4. View POD/documents
+5. Dashboard (progress bar, SLA statuses)
