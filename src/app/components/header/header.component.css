@@ -3,7 +3,7 @@
 }
 
 .toolbar-title {
-    color: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-tertiary);
     font-family: "Noto Serif Display Condensed Bold";
 }
 

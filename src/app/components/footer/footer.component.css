@@ -10,8 +10,9 @@
     font-size: 10px;
     font-weight: 400;
     font-family: "Noto Serif Display Condensed Italic";
+    color: var(--mat-sys-tertiary)
 }
 
 .footer-background {
-    background-color: var(--mat-sys-primary);
+    background-color: var(--mat-sys-secondary);
 }
