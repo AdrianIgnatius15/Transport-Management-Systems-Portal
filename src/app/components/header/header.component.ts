@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, WritableSignal } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  public isLoggedIn : WritableSignal<boolean>
 
+  constructor(private authenticationSvc: AuthenticationService) {
+    this.isLoggedIn = this.authenticationSvc.isLoggedIn;
+  }
 }
