@@ -11,6 +11,7 @@ import { OrderPageComponent } from './pages/order.page/order.page.component';
 import { DocumentsPageComponent } from './pages/documents.page/documents.page.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,9 @@ import { HeaderComponent } from './components/header/header.component';
     MatToolbarModule,
     MatButtonModule,
   ],
-  providers: [],
+  providers: [
+    provideHttpClient()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
