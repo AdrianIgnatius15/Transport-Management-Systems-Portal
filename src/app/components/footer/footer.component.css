@@ -8,8 +8,9 @@
 
 .text-content {
     font-size: 10px;
-    font-weight: 400;
-    font-family: "Noto Serif Display Condensed Italic";
+    font-weight: 300;
+    font-style: normal;
+    font-family: "Delivery";
     color: var(--mat-sys-tertiary)
 }
 

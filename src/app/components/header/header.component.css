@@ -4,7 +4,8 @@
 
 .toolbar-title {
     color: var(--mat-sys-on-tertiary);
-    font-family: "Noto Serif Display Condensed Bold";
+    font-family: "Delivery";
+    font-weight: bold;
 }
 
 .toolbar-background {
@@ -19,5 +20,12 @@
 }
 
 .login-button {
-    font-family: "Noto Serif Display Condensed Medium";
+    font-family: "Delivery";
+}
+
+.toolbar-container {
+    width: auto;
+    height: auto;
+    /* margin: 0 auto; */
+    padding: 0px 0px 0px 0px;
 }
