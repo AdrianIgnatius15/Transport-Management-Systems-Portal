@@ -1,0 +1,97 @@
+/* Delivery Font Family - Regular */
+@font-face {
+  font-family: 'Delivery';
+  src: url('fonts/EOT/Delivery_W_Rg.eot');
+  src: url('fonts/EOT/Delivery_W_Rg.eot?#iefix') format('embedded-opentype'),
+       url('fonts/WOFF2/Delivery_W_Rg.woff2') format('woff2'),
+       url('fonts/WOFF/Delivery_W_Rg.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Delivery Font Family - Italic */
+@font-face {
+  font-family: 'Delivery';
+  src: url('fonts/EOT/Delivery_W_It.eot');
+  src: url('fonts/EOT/Delivery_W_It.eot?#iefix') format('embedded-opentype'),
+       url('fonts/WOFF2/Delivery_W_It.woff2') format('woff2'),
+       url('fonts/WOFF/Delivery_W_It.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Delivery Font Family - Light */
+@font-face {
+  font-family: 'Delivery';
+  src: url('fonts/EOT/Delivery_W_Lt.eot');
+  src: url('fonts/EOT/Delivery_W_Lt.eot?#iefix') format('embedded-opentype'),
+       url('fonts/WOFF2/Delivery_W_Lt.woff2') format('woff2'),
+       url('fonts/WOFF/Delivery_W_Lt.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Delivery Font Family - Light Italic */
+@font-face {
+  font-family: 'Delivery';
+  src: url('fonts/EOT/Delivery_W_LtIt.eot');
+  src: url('fonts/EOT/Delivery_W_LtIt.eot?#iefix') format('embedded-opentype'),
+       url('fonts/WOFF2/Delivery_W_LtIt.woff2') format('woff2'),
+       url('fonts/WOFF/Delivery_W_LtIt.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Delivery Font Family - Bold */
+@font-face {
+  font-family: 'Delivery';
+  src: url('fonts/EOT/Delivery_W_Bd.eot');
+  src: url('fonts/EOT/Delivery_W_Bd.eot?#iefix') format('embedded-opentype'),
+       url('fonts/WOFF2/Delivery_W_Bd.woff2') format('woff2'),
+       url('fonts/WOFF/Delivery_W_Bd.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Delivery Font Family - Bold Italic */
+@font-face {
+  font-family: 'Delivery';
+  src: url('fonts/EOT/Delivery_W_BdIt.eot');
+  src: url('fonts/EOT/Delivery_W_BdIt.eot?#iefix') format('embedded-opentype'),
+       url('fonts/WOFF2/Delivery_W_BdIt.woff2') format('woff2'),
+       url('fonts/WOFF/Delivery_W_BdIt.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Delivery Font Family - Condensed Black */
+@font-face {
+  font-family: 'Delivery';
+  src: url('fonts/EOT/Delivery_W_CdBlk.eot');
+  src: url('fonts/EOT/Delivery_W_CdBlk.eot?#iefix') format('embedded-opentype'),
+       url('fonts/WOFF2/Delivery_W_CdBlk.woff2') format('woff2'),
+       url('fonts/WOFF/Delivery_W_CdBlk.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: condensed;
+  font-display: swap;
+}
+
+/* Delivery Font Family - Condensed Light */
+@font-face {
+  font-family: 'Delivery';
+  src: url('fonts/EOT/Delivery_W_CdLt.eot');
+  src: url('fonts/EOT/Delivery_W_CdLt.eot?#iefix') format('embedded-opentype'),
+       url('fonts/WOFF2/Delivery_W_CdLt.woff2') format('woff2'),
+       url('fonts/WOFF/Delivery_W_CdLt.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: condensed;
+  font-display: swap;
+}
