@@ -3,3 +3,9 @@
 3. Track orders (public tracking page)
 4. View POD/documents
 5. Dashboard (progress bar, SLA statuses)
+
+
+Customer Account Data
+Username: tms-customer
+Email: tms-customer@dhl.com
+Password: tms-customer
