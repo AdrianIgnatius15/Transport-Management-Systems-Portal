@@ -1,1 +1,34 @@
+.container-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('../../../../public/login-background.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: auto;
+    height: 100vh;
+}
 
+h3 {
+    font-family: 'Delivery';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 2rem;
+    color: white;
+}
+
+h4 {
+    font-family: 'Delivery';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1rem;
+    color: white;
+}
+
+.sso-button {
+    background-color: var(--mat-sys-secondary) ;
+}
