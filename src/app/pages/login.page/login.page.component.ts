@@ -1,7 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthenticationService } from '../../services/authentication.service';
-import { Credentials } from '../../models/credentials/credentials';
+import { Component, effect, inject, OnInit } from '@angular/core';
+import Keycloak from 'keycloak-js';
+import {
+  KEYCLOAK_EVENT_SIGNAL,
+  KeycloakEventType,
+  typeEventArgs,
+  ReadyArgs
+} from 'keycloak-angular';
 
 @Component({
   selector: 'app-login.page',
@@ -9,33 +13,38 @@ import { Credentials } from '../../models/credentials/credentials';
   templateUrl: './login.page.component.html',
   styleUrl: './login.page.component.css'
 })
-export class LoginPageComponent implements OnInit, OnDestroy {
-  public credentials: Credentials = {
-    username: "",
-    password: ""
-  };
+export class LoginPageComponent implements OnInit {
+  public authenticatedFlag: boolean = false;
+  public keyCloakStatus: string | undefined;
 
-  constructor(
-    private routerSvc: Router,
-    private authenticationSvc: AuthenticationService
-  ) {}
+  private readonly keycloak = inject(Keycloak);
+  private readonly keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
 
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+  constructor() {
+    effect(() => {
+      const keycloakEvent = this.keycloakSignal();
 
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
+      this.keyCloakStatus = keycloakEvent.type;
 
-  public login() {
-    this.authenticationSvc.login(this.credentials).subscribe((_creds) => {
-      this.authenticationSvc.saveLoginSession();
-      this.routerSvc.navigate(["/home"]);
+      if (keycloakEvent.type === KeycloakEventType.Ready) {
+        this.authenticatedFlag = typeEventArgs<ReadyArgs>(keycloakEvent.args);
+      }
+
+      if (keycloakEvent.type === KeycloakEventType.AuthLogout) {
+        this.authenticatedFlag = false;
+      }
     });
   }
 
-  public logout() {
-    this.authenticationSvc.logout();
+  ngOnInit(): void {
+    // Keycloak state is managed via signal and noAuthGuard
+  }
+
+  public login(): void {
+    this.keycloak.login();
+  }
+
+  public logout(): void {
+    this.keycloak.logout();
   }
 }
