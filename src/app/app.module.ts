@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatGridListModule } from "@angular/material/grid-list";
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +15,7 @@ import { DocumentsPageComponent } from './pages/documents.page/documents.page.co
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { provideHttpClient } from '@angular/common/http';
-import { provideKeycloak, withAutoRefreshToken, AutoRefreshTokenService, UserActivityService } from "keycloak-angular";
+import { AutoRefreshTokenService, provideKeycloak, UserActivityService, withAutoRefreshToken } from "keycloak-angular";
 import { ForbiddenPage } from './pages/forbidden.page/forbidden.page';
 
 @NgModule({
@@ -31,7 +33,9 @@ import { ForbiddenPage } from './pages/forbidden.page/forbidden.page';
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
-    MatGridListModule
+    MatGridListModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   providers: [
     provideHttpClient(),
@@ -52,7 +56,7 @@ import { ForbiddenPage } from './pages/forbidden.page/forbidden.page';
         })
       ],
       providers: [AutoRefreshTokenService, UserActivityService]
-    }),
+    })
   ],
   bootstrap: [AppComponent]
 })
