@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
+import { MatGridListModule } from "@angular/material/grid-list";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +13,8 @@ import { DocumentsPageComponent } from './pages/documents.page/documents.page.co
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { provideHttpClient } from '@angular/common/http';
+import { provideKeycloak, withAutoRefreshToken, AutoRefreshTokenService, UserActivityService } from "keycloak-angular";
+import { ForbiddenPage } from './pages/forbidden.page/forbidden.page';
 
 @NgModule({
   declarations: [
@@ -20,16 +23,36 @@ import { provideHttpClient } from '@angular/common/http';
     OrderPageComponent,
     DocumentsPageComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    ForbiddenPage
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
+    MatGridListModule
   ],
   providers: [
-    provideHttpClient()
+    provideHttpClient(),
+    provideKeycloak({
+      config: {
+        url: "http://127.0.0.1:8080/",
+        realm: "tms",
+        clientId: "tms-customer-portal-3865"
+      },
+      initOptions: {
+        onLoad: "check-sso",
+        silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'
+      },
+      features: [
+        withAutoRefreshToken({
+          onInactivityTimeout: "logout",
+          sessionTimeout: 60000
+        })
+      ],
+      providers: [AutoRefreshTokenService, UserActivityService]
+    }),
   ],
   bootstrap: [AppComponent]
 })
