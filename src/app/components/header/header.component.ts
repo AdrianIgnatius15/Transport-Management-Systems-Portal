@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../services/authentication.service';
-import { Signal } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
+import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType, ReadyArgs, typeEventArgs } from 'keycloak-angular';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-header',
@@ -9,13 +9,33 @@ import { Signal } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
-  public isLoggedIn: Signal<boolean>;
+  public keyCloakStatus: string | undefined;
+  public authenticatedFlag: boolean = false;
 
-  constructor(private authenticationSvc: AuthenticationService) {
-    this.isLoggedIn = this.authenticationSvc.isLoggedIn;
+  private readonly keycloak = inject(Keycloak);
+  private readonly keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
+
+  constructor() {
+    effect(() => {
+      const keycloakEvent = this.keycloakSignal();
+
+      this.keyCloakStatus = keycloakEvent.type;
+
+      if (keycloakEvent.type === KeycloakEventType.Ready) {
+        this.authenticatedFlag = typeEventArgs<ReadyArgs>(keycloakEvent.args);
+      }
+
+      if (keycloakEvent.type === KeycloakEventType.AuthLogout) {
+        this.authenticatedFlag = false;
+      }
+    });
   }
 
   ngOnInit(): void {
     // Component initialized
+  }
+
+  public logout() {
+    this.keycloak.logout();
   }
 }
