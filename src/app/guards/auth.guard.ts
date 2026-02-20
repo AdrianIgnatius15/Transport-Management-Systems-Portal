@@ -40,7 +40,7 @@ const checkAccess = async (
   const requiredRole = route.data['role'];
   if (requiredRole) {
     const hasRequiredRole = (role: string): boolean =>
-      Object.values(grantedRoles.resourceRoles).some((roles) => roles.includes(role));
+      Object.values(grantedRoles.realmRoles).some((roles) => roles.includes(role));
 
     if (!hasRequiredRole(requiredRole)) {
       return router.parseUrl('/forbidden');
