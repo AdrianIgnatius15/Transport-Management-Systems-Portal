@@ -3,6 +3,6 @@
     <h4>Customer Portal</h4>
 
     @if (authenticatedFlag === false) {
-        <button class="sso-button" matButton="filled" color="var(--mat-sys-secondary)">Single Sign On Login</button>
+        <button class="sso-button" matButton="filled" color="var(--mat-sys-secondary)" (click)="login()">Login</button>
     }
 </div>
