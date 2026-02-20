@@ -17,7 +17,7 @@ const routes: Routes = [
     path: 'orders', 
     component: OrderPageComponent, 
     canActivate: [authGuard], 
-    data: { role: 'tms-customer' } 
+    data: { role: 'customer' } 
   },
   { path: 'forbidden', component: ForbiddenPage },
   { path: '**', redirectTo: '/orders' }
