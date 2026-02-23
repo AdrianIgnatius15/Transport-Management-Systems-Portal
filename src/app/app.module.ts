@@ -14,9 +14,13 @@ import { OrderPageComponent } from './pages/order.page/order.page.component';
 import { DocumentsPageComponent } from './pages/documents.page/documents.page.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { provideHttpClient } from '@angular/common/http';
-import { AutoRefreshTokenService, provideKeycloak, UserActivityService, withAutoRefreshToken } from "keycloak-angular";
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { AutoRefreshTokenService, createInterceptorCondition, INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG, IncludeBearerTokenCondition, includeBearerTokenInterceptor, provideKeycloak, UserActivityService, withAutoRefreshToken } from "keycloak-angular";
 import { ForbiddenPage } from './pages/forbidden.page/forbidden.page';
+
+const localhostURLCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
+  urlPattern: /^(http:\/\/localhost:5181)(\/.*)?$/i
+});
 
 @NgModule({
   declarations: [
@@ -38,7 +42,9 @@ import { ForbiddenPage } from './pages/forbidden.page/forbidden.page';
     MatFormFieldModule
   ],
   providers: [
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([includeBearerTokenInterceptor])
+    ),
     provideKeycloak({
       config: {
         url: "http://127.0.0.1:8080/",
@@ -55,7 +61,14 @@ import { ForbiddenPage } from './pages/forbidden.page/forbidden.page';
           sessionTimeout: 60000
         })
       ],
-      providers: [AutoRefreshTokenService, UserActivityService]
+      providers: [
+        AutoRefreshTokenService, 
+        UserActivityService,
+        {
+          provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
+          useValue: [localhostURLCondition]
+        }
+      ]
     })
   ],
   bootstrap: [AppComponent]
