@@ -17,7 +17,7 @@ const routes: Routes = [
     path: 'orders', 
     component: OrderPageComponent, 
     canActivate: [authGuard], 
-    data: { role: 'customer' } 
+    data: { role: 'shipper' } 
   },
   { path: 'forbidden', component: ForbiddenPage },
   { path: '**', redirectTo: '/orders' }
