@@ -8,9 +8,13 @@ import { UserProfileService } from '../../services/user-profile.service';
   styleUrl: './order.page.component.css'
 })
 export class OrderPageComponent implements OnInit {
-  constructor(private readonly userProfileSvc: UserProfileService) {}
+  public userAuthenticatedFlag: boolean = false;
 
-  async ngOnInit(): Promise<void> {
-    
+  constructor(
+    private readonly userProfileSvc: UserProfileService
+  ) {}
+
+  ngOnInit(): void {
+    this.userAuthenticatedFlag = this.userProfileSvc.isUserAuthenticated();
   }
 }
