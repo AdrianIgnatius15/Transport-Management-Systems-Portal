@@ -15,6 +15,9 @@
         },
         "@schematics/angular:pipe": {
           "standalone": false
+        },
+        "@schematics/angular:service": {
+          "type": "service"
         }
       },
       "root": "",
