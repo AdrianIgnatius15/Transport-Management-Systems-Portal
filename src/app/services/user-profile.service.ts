@@ -4,6 +4,7 @@ import Keycloak, { KeycloakProfile } from 'keycloak-js';
 import { Client } from '../models/client';
 import { catchError } from 'rxjs';
 import { ErrorHandlerService } from './error-handler.service';
+import { ClientUpdateDto } from '../models/dtos/clientUpdateDto';
 
 @Injectable({
   providedIn: 'root',
@@ -21,16 +22,16 @@ export class UserProfileService {
     return this.keycloak.authenticated ? this.keycloak.loadUserProfile() : null;
   }
 
-  public upsertUserProfile(userProfile: KeycloakProfile) {
+  public upsertUserProfile(clientUpdateDto: ClientUpdateDto) {
     return this.httpClient.post<Client>(`http://localhost:5181/api/client/upsert`, {
-      name: userProfile.firstName + " " + userProfile.lastName,
-      contactEmail: userProfile.email
-    }).pipe(catchError(this.httpErrorHandlerSvc.handlingError));
+      name: clientUpdateDto.name,
+      contactEmail: clientUpdateDto.contactEmail,
+      contactPhone: clientUpdateDto.contactPhone
+    });
   }
 
   public getUserDetails(email: string) {
-    return this.httpClient.get<Client | null>(`http://localhost:5181/api/client?email=${email}`)
-      .pipe(catchError(this.httpErrorHandlerSvc.handlingError));
+    return this.httpClient.get<Client | null>(`http://localhost:5181/api/client?email=${email}`);
   }
 
   public isUserAuthenticated() {
