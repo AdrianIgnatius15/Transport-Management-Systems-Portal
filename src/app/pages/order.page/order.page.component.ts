@@ -3,6 +3,7 @@ import { UserProfileService } from '../../services/user-profile.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateUserProfileComponent } from '../../components/dialog/update-user-profile/update-user-profile.component';
 import { KeycloakProfile } from 'keycloak-js';
+import { DatashareService } from '../../services/datashare.service';
 
 @Component({
   selector: 'app-order.page',
@@ -15,6 +16,7 @@ export class OrderPageComponent implements OnInit {
 
   constructor(
     private readonly userProfileSvc: UserProfileService,
+    private readonly dataShareService: DatashareService,
     private updateUserProfileDialog: MatDialog
   ) {}
 
@@ -35,6 +37,7 @@ export class OrderPageComponent implements OnInit {
 
               dialogRef.afterClosed().subscribe(data => {
                 if (data === true) {
+                  this.dataShareService.updateClientProfileCompletionStatus(true);
                   this.userProfileSvc.logout();
                 }
               });

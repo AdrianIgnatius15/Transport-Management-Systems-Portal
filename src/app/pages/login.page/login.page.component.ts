@@ -6,6 +6,7 @@ import {
   typeEventArgs,
   ReadyArgs
 } from 'keycloak-angular';
+import { DatashareService } from '../../services/datashare.service';
 
 @Component({
   selector: 'app-login.page',
@@ -20,7 +21,9 @@ export class LoginPageComponent implements OnInit {
   private readonly keycloak = inject(Keycloak);
   private readonly keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
 
-  constructor() {
+  constructor(
+    private readonly dataShareService: DatashareService
+  ) {
     effect(() => {
       const keycloakEvent = this.keycloakSignal();
 
@@ -37,7 +40,9 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Keycloak state is managed via signal and noAuthGuard
+    if (this.dataShareService.clientProfileUpdateCompletionStatus() === true) {
+      //Show a toast and right before dismissing it, update the signal back to 'false'
+    }
   }
 
   public login(): void {
