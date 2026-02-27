@@ -1,0 +1,5 @@
+.dialog-internal-container {
+    display: flex;
+    flex-flow: column;
+    width: auto;
+}

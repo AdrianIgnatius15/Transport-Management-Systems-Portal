@@ -1,5 +1,4 @@
 import { Component, Inject, signal } from '@angular/core';
-import { Client } from '../../../models/client';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { KeycloakProfile } from 'keycloak-js';
 import { UserProfileService } from '../../../services/user-profile.service';
@@ -14,17 +13,19 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   styleUrl: './update-user-profile.component.css',
 })
 export class UpdateUserProfileComponent {
-  public readonly emailFormControl = new FormControl("", [Validators.required, Validators.email]);
+  public readonly phoneFormControl = new FormControl("", [
+    Validators.required,
+    Validators.pattern(/^(?:\+?1[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/)
+  ]);
   public errorMessage = signal("");
 
-  public user: Client = new Client();
 
   constructor(
     private dialogReference: MatDialogRef<UpdateUserProfileComponent, boolean>,
     @Inject(MAT_DIALOG_DATA) public data: KeycloakProfile,
     private userProfileSvc: UserProfileService
   ) {
-    merge(this.emailFormControl.statusChanges, this.emailFormControl.valueChanges)
+    merge(this.phoneFormControl.statusChanges, this.phoneFormControl.valueChanges)
         .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
   }
@@ -34,17 +35,24 @@ export class UpdateUserProfileComponent {
   }
 
   updateErrorMessage() {
-    if (this.emailFormControl.hasError("required")) {
+    if (this.phoneFormControl.hasError("required")) {
       this.errorMessage.set("You must enter a value")
-    } else if (this.emailFormControl.hasError("email")) {
-      this.errorMessage.set("Not a valid email")
+    } else if (this.phoneFormControl.hasError("phone")) {
+      this.errorMessage.set("Not a valid phone!")
     } else {
       this.errorMessage.set("");
     }
   }
 
   closeDialog() {
-    // this.userProfileSvc.upsertUserProfile()
+    // grab the value from the form control instead of a separate property
+    const phoneValue = this.phoneFormControl.value as string || "";
+    console.info("Phone number", phoneValue);
+    this.userProfileSvc.upsertUserProfile({
+      contactEmail: this.data.email ?? "",
+      contactPhone: phoneValue,
+      name: this.data.firstName + " " + this.data.lastName
+    }).subscribe();
     this.dialogReference.close();
   }
 
