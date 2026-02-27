@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Update User Profile</h2>
+@if (this.data) {
+    <mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput type="text" name="name" [value]="user.name" disabled="true" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput type="text" name="name" [value]="user.contactEmail" disabled="true" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Contact Phone</mat-label>
+            <input matInput type="number" name="contactPhone" [formControl]="emailFormControl" (blur)="updateErrorMessage()" [value]="user.contactPhone" required />
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button mat-button mat-dialog-close color="var(--mat-sys-tertiary-fixed)" (click)="closeDialog()">Update</button>
+    </mat-dialog-actions>
+}
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="cancelDialog()">Cancel</button>
+</mat-dialog-actions>
