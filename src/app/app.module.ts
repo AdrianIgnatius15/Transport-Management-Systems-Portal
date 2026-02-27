@@ -6,6 +6,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from "@angular/material/dialog";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +18,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AutoRefreshTokenService, createInterceptorCondition, INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG, IncludeBearerTokenCondition, includeBearerTokenInterceptor, provideKeycloak, UserActivityService, withAutoRefreshToken } from "keycloak-angular";
 import { ForbiddenPage } from './pages/forbidden.page/forbidden.page';
+import { UpdateUserProfileComponent } from './components/dialog/update-user-profile/update-user-profile.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const localhostURLCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:5181)(\/.*)?$/i
@@ -30,7 +33,8 @@ const localhostURLCondition = createInterceptorCondition<IncludeBearerTokenCondi
     DocumentsPageComponent,
     FooterComponent,
     HeaderComponent,
-    ForbiddenPage
+    ForbiddenPage,
+    UpdateUserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,11 @@ const localhostURLCondition = createInterceptorCondition<IncludeBearerTokenCondi
     MatButtonModule,
     MatGridListModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideHttpClient(
