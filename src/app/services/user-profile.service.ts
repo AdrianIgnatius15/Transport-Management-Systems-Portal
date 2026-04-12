@@ -34,6 +34,14 @@ export class UserProfileService {
     return this.httpClient.get<Client | null>(`http://localhost:5181/api/client?email=${email}`);
   }
 
+  public getShipperAccountDetails(uid: string) {
+    return this.httpClient.get<Client | null>(`http://localhost:5181/api/client/shipper/accountdetails/${uid}`);
+  }
+
+  public updateShipperAccount(uid: string, shipperAccountDetails: Client) {
+    return this.httpClient.put<void>(`http://localhost:5181/api/client/shipper/updateaccount/${uid}`, shipperAccountDetails);
+  }
+
   public isUserAuthenticated() {
     return this.keycloak.authenticated;
   }
