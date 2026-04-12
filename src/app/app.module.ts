@@ -56,7 +56,7 @@ const localhostURLCondition = createInterceptorCondition<IncludeBearerTokenCondi
     provideKeycloak({
       config: {
         url: "http://127.0.0.1:8080/",
-        realm: "transport-management-system",
+        realm: "transportation-management-system",
         clientId: "tms-customer-portal-3865"
       },
       initOptions: {
