@@ -1,10 +1,11 @@
-import { Component, Inject, signal } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, signal } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { KeycloakProfile } from 'keycloak-js';
 import { UserProfileService } from '../../../services/user-profile.service';
 import { FormControl, Validators } from '@angular/forms';
-import { merge } from 'rxjs';
+import { merge, Subject, takeUntil } from 'rxjs';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { Client } from '../../../models/client';
 
 @Component({
   selector: 'app-update-user-profile',
@@ -12,13 +13,14 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   templateUrl: './update-user-profile.component.html',
   styleUrl: './update-user-profile.component.css',
 })
-export class UpdateUserProfileComponent {
+export class UpdateUserProfileComponent implements OnDestroy {
   public readonly phoneFormControl = new FormControl("", [
     Validators.required,
     Validators.pattern(/^(?:\+?1[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/)
   ]);
   public errorMessage = signal("");
 
+  private destroyDialogFlag: Subject<void> = new Subject<void>();
 
   constructor(
     private dialogReference: MatDialogRef<UpdateUserProfileComponent, boolean>,
@@ -48,15 +50,28 @@ export class UpdateUserProfileComponent {
     // grab the value from the form control instead of a separate property
     const phoneValue = this.phoneFormControl.value as string || "";
     console.info("Phone number", phoneValue);
-    this.userProfileSvc.upsertUserProfile({
+    // this.userProfileSvc.upsertUserProfile({
+    //   contactEmail: this.data.email ?? "",
+    //   contactPhone: phoneValue,
+    //   name: this.data.firstName + " " + this.data.lastName
+    // }).subscribe();
+    let client: Client = {
+      id: this.data.id ?? "",
       contactEmail: this.data.email ?? "",
       contactPhone: phoneValue,
-      name: this.data.firstName + " " + this.data.lastName
-    }).subscribe();
+      name: this.data.firstName ?? "" + " " + this.data.lastName
+    };
+    this.userProfileSvc.updateShipperAccount(this.data.id ?? "", client)
+    .pipe(takeUntil(this.destroyDialogFlag));
     this.dialogReference.close();
   }
 
   cancelDialog() {
     this.dialogReference.close(true);
+  }
+
+  ngOnDestroy(): void {
+    this.destroyDialogFlag.next();
+    this.destroyDialogFlag.complete();
   }
 }
