@@ -22,7 +22,7 @@ import { UpdateUserProfileComponent } from './components/dialog/update-user-prof
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const localhostURLCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
-  urlPattern: /^(http:\/\/localhost:5181)(\/.*)?$/i
+  urlPattern: /^(http:\/\/localhost:(5181|5230))(\/.*)?$/i
 });
 
 @NgModule({
