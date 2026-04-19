@@ -2,20 +2,20 @@
 <div class="dialog-internal-container">
     @if (this.data) {
         <mat-dialog-content>
-            <mat-form-field>
+            <!-- <mat-form-field>
                 <mat-label>Company First Name</mat-label>
-                <input matInput type="text" name="name" [value]="data.firstName" disabled="true" />
-            </mat-form-field>
+                <input matInput type="text" name="name" [value]="data.name" disabled="true" />
+            </mat-form-field> -->
+            <h5>Client Name</h5>
+            <p>{{ data.name }}</p>
 
-            <mat-form-field>
-                <mat-label>Company Second Name</mat-label>
-                <input matInput type="text" name="name" [value]="data.lastName" disabled="true" />
-            </mat-form-field>
-
-            <mat-form-field>
+            <!-- <mat-form-field>
                 <mat-label>Email</mat-label>
-                <input matInput type="text" name="name" [value]="data.email" disabled="true" />
-            </mat-form-field>
+                <input matInput type="text" name="name" [value]="data.contactEmail" disabled="true" />
+            </mat-form-field> -->
+
+            <h5>Client Email </h5>
+            <p>{{ data.contactEmail }}</p>
 
             <mat-form-field>
                 <mat-label>Contact Phone</mat-label>
@@ -25,10 +25,23 @@
         </mat-dialog-content>
 
         <mat-dialog-actions>
-            <button mat-button mat-dialog-close color="var(--mat-sys-tertiary-fixed)" (click)="closeDialog()">Update</button>
+            <button mat-button 
+                    color="var(--mat-sys-tertiary-fixed)" 
+                    [disabled]="phoneFormControl.defaultValue === '' || this.isLoading()" 
+                    (click)="closeDialog()">
+                @if (this.isLoading()) {
+                    Updating...
+                } @else {
+                    Update
+                }
+            </button>
+
+            <button mat-button 
+                    mat-dialog-close 
+                    [disabled]="this.isLoading()"
+                    (click)="cancelDialog()">
+                Cancel
+            </button>
         </mat-dialog-actions>
 }
-    <mat-dialog-actions>
-        <button mat-button mat-dialog-close (click)="cancelDialog()">Cancel</button>
-    </mat-dialog-actions>
 </div>

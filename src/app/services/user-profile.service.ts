@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Keycloak, { KeycloakProfile } from 'keycloak-js';
 import { Client } from '../models/client';
-import { catchError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { ErrorHandlerService } from './error-handler.service';
 import { ClientUpdateDto } from '../models/dtos/clientUpdateDto';
 
@@ -23,7 +23,7 @@ export class UserProfileService {
   }
 
   public upsertUserProfile(clientUpdateDto: ClientUpdateDto) {
-    return this.httpClient.post<Client>(`http://localhost:5181/api/client/upsert`, {
+    return this.httpClient.post<Client>(`http://localhost:5230/api/client/upsert`, {
       name: clientUpdateDto.name,
       contactEmail: clientUpdateDto.contactEmail,
       contactPhone: clientUpdateDto.contactPhone
@@ -31,15 +31,18 @@ export class UserProfileService {
   }
 
   public getUserDetails(email: string) {
-    return this.httpClient.get<Client | null>(`http://localhost:5181/api/client?email=${email}`);
+    return this.httpClient.get<Client | null>(`http://localhost:5230/api/client?email=${email}`);
   }
 
   public getShipperAccountDetails(uid: string) {
-    return this.httpClient.get<Client | null>(`http://localhost:5181/api/client/shipper/accountdetails/${uid}`);
+    return this.httpClient.get<Client | null>(`http://localhost:5230/api/client/shipper/accountdetails/${uid}`);
   }
 
   public updateShipperAccount(uid: string, shipperAccountDetails: Client) {
-    return this.httpClient.put<void>(`http://localhost:5181/api/client/shipper/updateaccount/${uid}`, shipperAccountDetails);
+    return this.httpClient.put<void>(`http://localhost:5230/api/client/shipper/updateaccount/${uid}`, shipperAccountDetails)
+    .pipe(
+      catchError(this.httpErrorHandlerSvc.handlingError)
+    );
   }
 
   public isUserAuthenticated() {
