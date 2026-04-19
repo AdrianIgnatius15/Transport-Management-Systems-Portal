@@ -1,4 +1,6 @@
 @import '../public/fonts.style.css';
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 /* Note: Color palettes are generated from primary: #FFCC00, secondary: #D40511 */
 html {

@@ -8,6 +8,39 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from "@angular/material/dialog";
 
+import { 
+  ModuleRegistry, 
+  ColumnAutoSizeModule,
+  ColumnHoverModule,
+  ClientSideRowModelModule, 
+  PinnedRowModule,
+  RowAutoHeightModule,
+  RowStyleModule,
+  PaginationModule,
+  RowDragModule, 
+  CellSpanModule,
+  CellStyleModule,
+  HighlightChangesModule,
+  TooltipModule, 
+  TextFilterModule,
+  NumberFilterModule,
+  DateFilterModule,
+  BigIntFilterModule,
+  CustomFilterModule,
+  ExternalFilterModule,
+  QuickFilterModule, 
+  RowSelectionModule, 
+  TextEditorModule,
+  LargeTextEditorModule,
+  SelectEditorModule,
+  NumberEditorModule,
+  DateEditorModule,
+  CheckboxEditorModule,
+  CustomEditorModule,
+  UndoRedoEditModule, 
+  } from "ag-grid-community";
+import { AgGridAngular } from "ag-grid-angular";
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginPageComponent } from './pages/login.page/login.page.component';
@@ -24,6 +57,37 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 const localhostURLCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:(5181|5230))(\/.*)?$/i
 });
+
+ModuleRegistry.registerModules([
+  ColumnAutoSizeModule,
+  ColumnHoverModule,
+  ClientSideRowModelModule, 
+  PinnedRowModule,
+  RowAutoHeightModule,
+  RowStyleModule,
+  PaginationModule,
+  RowDragModule, 
+  CellSpanModule,
+  CellStyleModule,
+  HighlightChangesModule,
+  TooltipModule, 
+  TextFilterModule,
+  NumberFilterModule,
+  DateFilterModule,
+  BigIntFilterModule,
+  CustomFilterModule,
+  ExternalFilterModule,
+  QuickFilterModule, 
+  RowSelectionModule, 
+  TextEditorModule,
+  LargeTextEditorModule,
+  SelectEditorModule,
+  NumberEditorModule,
+  DateEditorModule,
+  CheckboxEditorModule,
+  CustomEditorModule,
+  UndoRedoEditModule
+]);
 
 @NgModule({
   declarations: [
@@ -47,7 +111,8 @@ const localhostURLCondition = createInterceptorCondition<IncludeBearerTokenCondi
     MatDialogModule,
     MatFormFieldModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AgGridAngular,
   ],
   providers: [
     provideHttpClient(
