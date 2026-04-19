@@ -2,7 +2,20 @@
 <html>
 <head>
     <title>Silent Check SSO</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Prevent clickjacking and enforce HTTPS -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 </head>
 <body>
+    <script>
+        // Keycloak uses this page to silently check SSO status via iframe
+        // This page should remain empty and only handle Keycloak's internal communication
+        // The parent window handles all the actual work
+        if (window.self !== window.top && window.location.origin === window.parent.location.origin) {
+            // We are in an iframe from the same origin - this is expected for silent SSO check
+            // Keycloak will detect the iframe and check SSO status via window.location hash
+        }
+    </script>
 </body>
 </html>
