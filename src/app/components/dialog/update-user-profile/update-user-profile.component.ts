@@ -18,7 +18,8 @@ export class UpdateUserProfileComponent implements OnDestroy {
     Validators.required,
     Validators.pattern(/^(?:\+?1[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/)
   ]);
-  public errorMessage = signal("");  public isLoading = signal(false);
+  public errorMessage = signal("");  
+  public isLoading = signal(false);
   private destroyDialogFlag: Subject<void> = new Subject<void>();
 
   constructor(
