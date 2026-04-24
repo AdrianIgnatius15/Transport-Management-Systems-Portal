@@ -1,1 +1,37 @@
-<p>order.page works!</p>
+<div>
+    <!-- @if (isDataLoadingFlag() === true) {
+        <mat-spinner></mat-spinner>
+    }@else {
+        @if(orders.length > 0) {
+            <ag-grid-angular 
+                style="width: 100%; height: 550px;"
+                [loading]="isDataLoadingFlag"
+                [rowData]="orders"
+                [columnDefs]="columnDefinitions"
+                [noRowsOverlayComponentParams]="overlayComponentParams"
+            />
+        } @else {
+            <div class="table-container-no-data">
+                <div style="display: flex; align-items: center; gap: 16px; justify-content: center;">
+                    <div>
+                        <p style="font-family: Delivery;">There's no orders from your account to ship!</p>
+                    </div>
+                    
+                    <div>
+                        <button matButton="tonal" style="background-color: green; color: bisque;">Create a order for shipment</button>
+                    </div>
+                </div>
+            </div>
+        }
+    } -->
+    <ag-grid-angular 
+        style="width: 85%; height: 550px; margin-top: 16px;"
+        [loading]="isDataLoadingFlag()"
+        [theme]="tableTheme"
+        [rowData]="orders"
+        [columnDefs]="columnDefinitions"
+        [noRowsOverlayComponentParams]="overlayComponentParams"
+    />
+
+    
+</div>

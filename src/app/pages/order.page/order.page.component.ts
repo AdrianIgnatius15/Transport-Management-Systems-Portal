@@ -1,13 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { UserProfileService } from '../../services/user-profile.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateUserProfileComponent } from '../../components/dialog/update-user-profile/update-user-profile.component';
 import { DatashareService } from '../../services/datashare.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { OrderService } from '../../services/order.service';
 import { Order } from '../../models/order';
-import { Pagination } from '../../models/request-body/pagination';
 import { Subject, takeUntil } from 'rxjs';
+import { themeMaterial, type ColDef } from "ag-grid-community";
 
 @Component({
   selector: 'app-order.page',
@@ -18,10 +17,29 @@ import { Subject, takeUntil } from 'rxjs';
 export class OrderPageComponent implements OnInit, OnDestroy {
   public userAuthenticatedFlag: boolean = false;
   public orders : Order[] = [];
-  public paginationParams: Pagination = {
-    pageNumber: 1,
-    pageSize: 5
+  public isDataLoadingFlag: WritableSignal<boolean> = signal(false);
+  public columnDefinitions: ColDef<Order>[] = [
+    { field: "id" },
+    { field: "clientId" },
+    { field: "orderNumber" },
+    { field: "status" },
+    { field: "priority" },
+    { field: "pickupAddress" },
+    { field: "deliveryAddress" },
+    { field: "createdAt" },
+  ];
+  public overlayComponentParams: any = {
+    loading: { overlayText: "Please wait while your data is loading..." },
+    noRows: { overlayText: "There's no orders from your account to ship!" },
+    noMatchingRows: { overlayText: "Current Filter Matches No Rows" },
+    exporting: { overlayText: "Exporting your data..." },
   };
+  public tableTheme = themeMaterial.withParams({
+    fontFamily: "Delivery",
+    headerFontFamily: "Delivery",
+    headerFontWeight: 900,
+    cellFontFamily: "Delivery"
+  });
 
   private destroyServiceSubscribeFlag: Subject<void> = new Subject<void>();
 
@@ -33,6 +51,10 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    await this.updateShipperInfoOrLoadOrdersofShipment();
+  }
+
+  private async updateShipperInfoOrLoadOrdersofShipment() {
     const user = await this.userProfileSvc.getUserProfile();
     if (user !== null) {
       this.userProfileSvc.getShipperAccountDetails(user.id ?? "")
@@ -47,6 +69,17 @@ export class OrderPageComponent implements OnInit, OnDestroy {
                   data: data
                 }
               );
+            } else {
+              this.isDataLoadingFlag.set(true);
+              this.orderService.getAllOrdersByShipperIdPaginated(user.id ?? "", { pageNumber: 1, pageSize: 5 })
+                  .pipe(takeUntil(this.destroyServiceSubscribeFlag))
+                .subscribe(paginatedOrders => {
+                  if (paginatedOrders) {
+                    this.isDataLoadingFlag.set(false);
+                  }
+
+                  this.orders = JSON.parse(JSON.stringify(paginatedOrders.items));
+                });
             }
           }
         });
