@@ -7,6 +7,7 @@ import { OrderService } from '../../services/order.service';
 import { Order } from '../../models/order';
 import { Subject, takeUntil } from 'rxjs';
 import { themeMaterial, type ColDef } from "ag-grid-community";
+import { TableCustomNoRowsOverlayComponent } from '../../components/table-custom-no-rows-overlay/table-custom-no-rows-overlay.component';
 
 @Component({
   selector: 'app-order.page',
@@ -28,6 +29,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
     { field: "deliveryAddress" },
     { field: "createdAt" },
   ];
+  public noOrdersOverlayComponent = TableCustomNoRowsOverlayComponent;
   public overlayComponentParams: any = {
     loading: { overlayText: "Please wait while your data is loading..." },
     noRows: { overlayText: "There's no orders from your account to ship!" },
