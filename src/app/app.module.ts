@@ -53,6 +53,7 @@ import { AutoRefreshTokenService, createInterceptorCondition, INCLUDE_BEARER_TOK
 import { ForbiddenPage } from './pages/forbidden.page/forbidden.page';
 import { UpdateUserProfileComponent } from './components/dialog/update-user-profile/update-user-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableCustomNoRowsOverlayComponent } from './components/table-custom-no-rows-overlay/table-custom-no-rows-overlay.component';
 
 const localhostURLCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:(5181|5230))(\/.*)?$/i
@@ -98,7 +99,8 @@ ModuleRegistry.registerModules([
     FooterComponent,
     HeaderComponent,
     ForbiddenPage,
-    UpdateUserProfileComponent
+    UpdateUserProfileComponent,
+    TableCustomNoRowsOverlayComponent
   ],
   imports: [
     BrowserModule,
