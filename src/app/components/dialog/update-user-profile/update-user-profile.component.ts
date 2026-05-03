@@ -1,6 +1,5 @@
 import { Component, Inject, Input, OnDestroy, signal } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { KeycloakProfile } from 'keycloak-js';
 import { UserProfileService } from '../../../services/user-profile.service';
 import { FormControl, Validators } from '@angular/forms';
 import { merge, Subject, takeUntil } from 'rxjs';
