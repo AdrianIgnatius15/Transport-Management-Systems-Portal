@@ -1,0 +1,6 @@
+.action-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    row-gap: 8px;
+}
