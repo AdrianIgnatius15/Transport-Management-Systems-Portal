@@ -37,7 +37,8 @@ import {
   DateEditorModule,
   CheckboxEditorModule,
   CustomEditorModule,
-  UndoRedoEditModule, 
+  UndoRedoEditModule,
+  ValidationModule, 
   } from "ag-grid-community";
 import { AgGridAngular } from "ag-grid-angular";
 
@@ -54,6 +55,8 @@ import { ForbiddenPage } from './pages/forbidden.page/forbidden.page';
 import { UpdateUserProfileComponent } from './components/dialog/update-user-profile/update-user-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableCustomNoRowsOverlayComponent } from './components/table-custom-no-rows-overlay/table-custom-no-rows-overlay.component';
+import { CreateOrderShipmentComponent } from './components/dialog/create-order-shipment/create-order-shipment.component';
+import { OrderTableActionsComponent } from './components/order-table-actions/order-table-actions.component';
 
 const localhostURLCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:(5181|5230))(\/.*)?$/i
@@ -87,7 +90,8 @@ ModuleRegistry.registerModules([
   DateEditorModule,
   CheckboxEditorModule,
   CustomEditorModule,
-  UndoRedoEditModule
+  UndoRedoEditModule,
+  ValidationModule
 ]);
 
 @NgModule({
@@ -100,7 +104,9 @@ ModuleRegistry.registerModules([
     HeaderComponent,
     ForbiddenPage,
     UpdateUserProfileComponent,
-    TableCustomNoRowsOverlayComponent
+    TableCustomNoRowsOverlayComponent,
+    CreateOrderShipmentComponent,
+    OrderTableActionsComponent
   ],
   imports: [
     BrowserModule,
