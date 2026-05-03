@@ -26,4 +26,14 @@ export class OrderService {
     return this.httpClient.get<PaginatedOrdersReadDto>(`http://localhost:5230/api/order/all/shipperid?pageNumber=${parameters.pageNumber}&pageSize=${parameters.pageSize}&id=${shipperId}`)
       .pipe(catchError(this.errorHandlerSvc.handlingError));
   }
+
+  public createOrder(order: Order) {
+    return this.httpClient.post<Order>(`http://localhost:5230/api/order/create`, order)
+      .pipe(catchError(this.errorHandlerSvc.handlingError));
+  }
+
+  public deleteOrder(order: Order) {
+    return this.httpClient.delete(`http://localhost:5230/api/order/${order.id}`)
+      .pipe(catchError(this.errorHandlerSvc.handlingError));
+  }
 }
