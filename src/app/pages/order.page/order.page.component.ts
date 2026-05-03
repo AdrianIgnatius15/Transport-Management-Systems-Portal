@@ -8,6 +8,7 @@ import { Order } from '../../models/order';
 import { Subject, takeUntil } from 'rxjs';
 import { themeMaterial, type ColDef } from "ag-grid-community";
 import { TableCustomNoRowsOverlayComponent } from '../../components/table-custom-no-rows-overlay/table-custom-no-rows-overlay.component';
+import { OrderTableActionsComponent } from '../../components/order-table-actions/order-table-actions.component';
 
 @Component({
   selector: 'app-order.page',
@@ -28,6 +29,14 @@ export class OrderPageComponent implements OnInit, OnDestroy {
     { field: "pickupAddress" },
     { field: "deliveryAddress" },
     { field: "createdAt" },
+    { 
+      headerName: "Actions",
+      cellRenderer: OrderTableActionsComponent,
+      cellRendererParams: {
+        onDeleteOrder: (data: Order) => this.deleteOrder(data),
+        onEditOrder: (data: Order) => this.updateOrder(data)
+      }
+    }
   ];
   public noOrdersOverlayComponent = TableCustomNoRowsOverlayComponent;
   public overlayComponentParams: any = {
@@ -86,6 +95,21 @@ export class OrderPageComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  public updateOrder(dataToUpdate: Order) {
+    console.info("Order update", dataToUpdate);
+  }
+
+  public deleteOrder(dataToDelete: Order) {
+    console.info("Order delete", dataToDelete);
+    this.orderService.deleteOrder(dataToDelete).subscribe({
+      next: () => {
+        console.log("Order deleted");
+        this.orders = this.orders.filter(order => order.id === dataToDelete.id);
+        
+      }
+    })
   }
 
   ngOnDestroy(): void {

@@ -27,6 +27,7 @@
     <div class="table-container">
         <ag-grid-angular 
             style="width: 100%; height: 550px; margin-top: 16px; margin-left: 5px; margin-right: 5px;"
+            [rowHeight]="40"
             [loading]="isDataLoadingFlag()"
             [theme]="tableTheme"
             [rowData]="orders"
