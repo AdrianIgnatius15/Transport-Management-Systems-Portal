@@ -7,6 +7,7 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from "@angular/material/dialog";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 import { 
   ModuleRegistry, 
@@ -57,6 +58,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableCustomNoRowsOverlayComponent } from './components/table-custom-no-rows-overlay/table-custom-no-rows-overlay.component';
 import { CreateOrderShipmentComponent } from './components/dialog/create-order-shipment/create-order-shipment.component';
 import { OrderTableActionsComponent } from './components/order-table-actions/order-table-actions.component';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import { UpdateOrderShipmentComponent } from './components/dialog/update-order-shipment/update-order-shipment.component';
 
 const localhostURLCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:(5181|5230))(\/.*)?$/i
@@ -106,7 +109,9 @@ ModuleRegistry.registerModules([
     UpdateUserProfileComponent,
     TableCustomNoRowsOverlayComponent,
     CreateOrderShipmentComponent,
-    OrderTableActionsComponent
+    OrderTableActionsComponent,
+    SnackbarComponent,
+    UpdateOrderShipmentComponent
   ],
   imports: [
     BrowserModule,
@@ -120,6 +125,7 @@ ModuleRegistry.registerModules([
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
     AgGridAngular,
   ],
   providers: [
