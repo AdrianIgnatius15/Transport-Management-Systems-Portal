@@ -1,14 +1,15 @@
-import { Component, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { UserProfileService } from '../../services/user-profile.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateUserProfileComponent } from '../../components/dialog/update-user-profile/update-user-profile.component';
-import { DatashareService } from '../../services/datashare.service';
 import { OrderService } from '../../services/order.service';
 import { Order } from '../../models/order';
 import { Subject, takeUntil } from 'rxjs';
 import { themeMaterial, type ColDef } from "ag-grid-community";
 import { TableCustomNoRowsOverlayComponent } from '../../components/table-custom-no-rows-overlay/table-custom-no-rows-overlay.component';
 import { OrderTableActionsComponent } from '../../components/order-table-actions/order-table-actions.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CreateOrderShipmentComponent } from '../../components/dialog/create-order-shipment/create-order-shipment.component';
 
 @Component({
   selector: 'app-order.page',
@@ -17,6 +18,8 @@ import { OrderTableActionsComponent } from '../../components/order-table-actions
   styleUrl: './order.page.component.css'
 })
 export class OrderPageComponent implements OnInit, OnDestroy {
+  private _snackbar: MatSnackBar = inject(MatSnackBar);
+
   public userAuthenticatedFlag: boolean = false;
   public orders : Order[] = [];
   public isDataLoadingFlag: WritableSignal<boolean> = signal(false);
@@ -57,8 +60,8 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   constructor(
     private readonly userProfileSvc: UserProfileService,
     private readonly orderService: OrderService,
-    private readonly dataShareService: DatashareService,
-    private updateUserProfileDialog: MatDialog
+    private updateUserProfileDialog: MatDialog,
+    private createShipmentOrderDialog: MatDialog,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -97,6 +100,14 @@ export class OrderPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  public async createOrder() {
+    const user = await this.userProfileSvc.getUserProfile();
+    if (user !== null) {
+      this.createShipmentOrderDialog.open(CreateOrderShipmentComponent);
+      
+    }
+  }
+
   public updateOrder(dataToUpdate: Order) {
     console.info("Order update", dataToUpdate);
   }
@@ -107,7 +118,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
       next: () => {
         console.log("Order deleted");
         this.orders = this.orders.filter(order => order.id === dataToDelete.id);
-        
+        this._snackbar.open(`The order shipment ID ${dataToDelete.id} has been deleted`);
       }
     })
   }

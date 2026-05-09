@@ -3,3 +3,10 @@
     align-items: center;
     justify-content: center;
 }
+
+.create-order-button {
+    display: flex;
+    justify-content: right;
+    margin-top: 8px;
+    margin-right: 5px;
+}
