@@ -4,6 +4,7 @@ import { OrderService } from '../../../services/order.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserProfileService } from '../../../services/user-profile.service';
 import { Subject, takeUntil } from 'rxjs';
+import { LocationService } from '../../../services/location.service';
 
 @Component({
   selector: 'app-create-order-shipment',
@@ -19,6 +20,7 @@ export class CreateOrderShipmentComponent implements OnDestroy {
   constructor(
     private dialogReference: MatDialogRef<CreateOrderShipmentComponent>,
     private readonly orderService: OrderService,
+    private readonly locationService: LocationService,
     public readonly userProfileService: UserProfileService
   ) {}
 
