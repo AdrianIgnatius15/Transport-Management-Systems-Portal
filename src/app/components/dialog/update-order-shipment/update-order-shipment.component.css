@@ -1,5 +1,82 @@
 .dialog-internal-container {
     display: flex;
     flex-flow: column;
-    width: auto;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.order-info-meta {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 20px;
+    padding: 12px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Master structure putting address blocks side-by-side */
+.addresses-dual-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    margin-top: 12px;
+}
+
+.address-pane {
+    background: #fff;
+}
+
+.pane-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.pane-title {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Internal fields arrangement inside an individual pane */
+.form-fields-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.col-span-2 {
+    grid-column: span 2;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.dropdown-option-text {
+    font-size: 12px;
+}
+
+.dialog-actions-row {
+    padding: 16px 24px;
+}
+
+/* RESPONSIVE LAYOUT FOR SMALLER SCREENS */
+@media (max-width: 950px) {
+    .addresses-dual-layout {
+        grid-template-columns: 1fr; /* Stack panels vertically */
+        gap: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-fields-grid {
+        grid-template-columns: 1fr; /* Stack inputs inside cards vertically */
+    }
+    .col-span-2 {
+        grid-column: span 1;
+    }
 }
