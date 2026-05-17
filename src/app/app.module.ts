@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatOptionModule } from '@angular/material/core';
 
 import { 
   ModuleRegistry, 
@@ -122,10 +124,11 @@ ModuleRegistry.registerModules([
     MatInputModule,
     MatFormFieldModule,
     MatDialogModule,
-    MatFormFieldModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    MatOptionModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSnackBarModule,
     AgGridAngular,
   ],
   providers: [
