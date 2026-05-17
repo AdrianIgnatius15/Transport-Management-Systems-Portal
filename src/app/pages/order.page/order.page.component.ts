@@ -11,6 +11,7 @@ import { OrderTableActionsComponent } from '../../components/order-table-actions
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateOrderShipmentComponent } from '../../components/dialog/create-order-shipment/create-order-shipment.component';
 import { UpdateOrderShipmentComponent } from '../../components/dialog/update-order-shipment/update-order-shipment.component';
+import { Address } from '../../models/address';
 
 @Component({
   selector: 'app-order.page',
@@ -28,10 +29,24 @@ export class OrderPageComponent implements OnInit, OnDestroy {
     { field: "id" },
     { field: "clientId" },
     { field: "orderNumber" },
-    { field: "status" },
+    { 
+      field: "status",
+    },
     { field: "priority" },
-    { field: "shipmentAddress" },
-    { field: "deliveryAddress" },
+    { 
+      field: "shipmentAddress",
+      valueFormatter: (params) => this.formatAddress(params.value),
+      autoHeight: true,
+      wrapText: true,
+      minWidth: 220
+    },
+    { 
+      field: "deliveryAddress",
+      valueFormatter: (params) => this.formatAddress(params.value),
+      autoHeight: true,
+      wrapText: true,
+      minWidth: 220
+    },
     { field: "createdAt" },
     { 
       headerName: "Actions",
@@ -125,6 +140,29 @@ export class OrderPageComponent implements OnInit, OnDestroy {
         this._snackbar.open(`The order shipment ID ${dataToDelete.id} has been deleted`);
       }
     })
+  }
+
+  private formatAddress(address: Address): string {
+    if (!address) {
+      return '';
+    }
+    const parts = [
+      address.line1,
+      address.city,
+      address.state,
+      address.postalCode,
+      address.country
+    ].filter(part => part && part.trim());
+    
+    return parts.join(', ');
+  }
+
+  private formatShipmentStatus(status: boolean) {
+    if (status === true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   ngOnDestroy(): void {
