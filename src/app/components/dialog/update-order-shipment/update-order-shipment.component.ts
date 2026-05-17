@@ -152,13 +152,12 @@ export class UpdateOrderShipmentComponent implements OnInit {
         receiverAddress: this.receiverAddressForm.value
       };
 
-      // Example execution hook calling your OrderService layer:
-      // this.orderService.updateOrderShipment(updatePayload).subscribe({
-      //   next: (res) => this.dialogReference.close(res),
-      //   error: (err) => console.error(err)
-      // });
-      
-      console.log('Form payload validated successfully:', updatePayload);
+      this.data.shipmentAddress = JSON.parse(JSON.stringify(this.senderAddressForm.value));
+      this.data.deliveryAddress = JSON.parse(JSON.stringify(this.receiverAddressForm.value));
+
+      this.orderService.updateOrder(this.data.id, this.data);
+
+      console.log('Updated order with address:', this.data);
       this.dialogReference.close(updatePayload);
     }
   }
