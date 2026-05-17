@@ -155,10 +155,14 @@ export class UpdateOrderShipmentComponent implements OnInit {
       this.data.shipmentAddress = JSON.parse(JSON.stringify(this.senderAddressForm.value));
       this.data.deliveryAddress = JSON.parse(JSON.stringify(this.receiverAddressForm.value));
 
-      this.orderService.updateOrder(this.data.id, this.data);
+      this.orderService.updateOrder(this.data.id, this.data)
+        .subscribe(value => {
+          if (value) {
+            this.dialogReference.close(value);
+          }
+        });
 
-      console.log('Updated order with address:', this.data);
-      this.dialogReference.close(updatePayload);
+      // this.dialogReference.close(updatePayload);
     }
   }
 }
