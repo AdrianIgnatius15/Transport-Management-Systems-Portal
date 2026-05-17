@@ -33,7 +33,7 @@ export class OrderService {
   }
 
   public updateOrder(orderId: string, order: Order) {
-    return this.httpClient.put<Order>(`http://localhost:5230/api/order/${orderId}`, order)
+    return this.httpClient.patch<Order>(`http://localhost:5230/api/order/${orderId}`, order)
       .pipe(catchError(this.errorHandlerSvc.handlingError));
   }
 
