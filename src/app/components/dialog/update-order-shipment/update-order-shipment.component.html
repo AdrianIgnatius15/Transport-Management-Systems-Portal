@@ -124,8 +124,8 @@
     </mat-dialog-content>
 
     <mat-dialog-actions align="end" class="dialog-actions-row">
-        <button mat-button (click)="onCancel()">Cancel</button>
-        <button mat-raised-button color="primary" 
+        <button matButton (click)="onCancel()">Cancel</button>
+        <button matButton mat-raised-button color="primary" 
                 [disabled]="!senderAddressForm.valid || !receiverAddressForm.valid" 
                 (click)="onSave()">
             Update Shipment
