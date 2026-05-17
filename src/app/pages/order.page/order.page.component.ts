@@ -10,6 +10,7 @@ import { TableCustomNoRowsOverlayComponent } from '../../components/table-custom
 import { OrderTableActionsComponent } from '../../components/order-table-actions/order-table-actions.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateOrderShipmentComponent } from '../../components/dialog/create-order-shipment/create-order-shipment.component';
+import { UpdateOrderShipmentComponent } from '../../components/dialog/update-order-shipment/update-order-shipment.component';
 
 @Component({
   selector: 'app-order.page',
@@ -29,7 +30,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
     { field: "orderNumber" },
     { field: "status" },
     { field: "priority" },
-    { field: "pickupAddress" },
+    { field: "shipmentAddress" },
     { field: "deliveryAddress" },
     { field: "createdAt" },
     { 
@@ -62,6 +63,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
     private readonly orderService: OrderService,
     private updateUserProfileDialog: MatDialog,
     private createShipmentOrderDialog: MatDialog,
+    private updateShipmentOrderDialog: MatDialog
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -109,7 +111,9 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   }
 
   public updateOrder(dataToUpdate: Order) {
-    console.info("Order update", dataToUpdate);
+    this.updateShipmentOrderDialog.open(UpdateOrderShipmentComponent, {
+      data: dataToUpdate 
+    });
   }
 
   public deleteOrder(dataToDelete: Order) {
