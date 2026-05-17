@@ -32,6 +32,11 @@ export class OrderService {
       .pipe(catchError(this.errorHandlerSvc.handlingError));
   }
 
+  public updateOrder(orderId: string, order: Order) {
+    return this.httpClient.put<Order>(`http://localhost:5230/api/order/${orderId}`, order)
+      .pipe(catchError(this.errorHandlerSvc.handlingError));
+  }
+
   public deleteOrder(order: Order) {
     return this.httpClient.delete(`http://localhost:5230/api/order/${order.id}`)
       .pipe(catchError(this.errorHandlerSvc.handlingError));
