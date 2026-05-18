@@ -1,4 +1,5 @@
 import { Address } from "./address";
+import { Shipment } from "./shipment";
 
 export class Order {
     id: string = "";
@@ -10,6 +11,7 @@ export class Order {
     shipmentAddress: Address = new Address();
     deliveryAddressId: string = "";
     deliveryAddress: Address = new Address();
+    shipments: Shipment[] = [];
     createdAt?: Date;
     updatedAt?: Date;
 }
