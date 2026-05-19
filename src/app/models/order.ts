@@ -1,11 +1,12 @@
 import { Address } from "./address";
+import { OrderStatus } from "./enums/order-status";
 import { Shipment } from "./shipment";
 
 export class Order {
     id: string = "";
     clientId: string = "";
     orderNumber: string = "";
-    status: boolean = false;
+    status: OrderStatus = OrderStatus.CREATED;
     priority: string = "";
     shipmentAddressId: string = "";
     shipmentAddress: Address = new Address();
