@@ -19,7 +19,6 @@ import { Shipment } from '../../../models/shipment';
 })
 export class CreateOrderShipmentComponent implements OnInit, OnDestroy {
   public orderForm!: FormGroup;
-
   public filteredLocationsForShipment!: Observable<LocationDetails[]>;
   public filteredLocationsForDelivery!: Observable<LocationDetails[]>;
 
@@ -180,7 +179,7 @@ export class CreateOrderShipmentComponent implements OnInit, OnDestroy {
     });
   }
 
-  public createOrderShipment() {
+  public async createOrderShipment() {
     if (this.orderForm.invalid) {
       this.orderForm.markAllAsTouched();
       return;
@@ -189,43 +188,47 @@ export class CreateOrderShipmentComponent implements OnInit, OnDestroy {
     const formValue = this.orderForm.value;
 
     // Assemble payload matching the required structural schema data types
-    const orderData: Order = {
-      ...new Order(),
-      priority: formValue.priority,
-      shipmentAddress: { ...formValue.shipmentAddress },
-      deliveryAddress: { ...formValue.deliveryAddress },
-      shipments: formValue.shipments.map((s: any) => {
-        const shipment: Shipment = {
-          id: s.id || '',
-          orderId: '',
-          pieces: s.pieces.map((p: any) => {
-            const piece: Piece = {
-              id: p.id || '',
-              description: p.description,
-              weight: p.weight,
-              height: p.height,
-              width: p.width,
-              length: p.length,
-              shipmentId: 0
-            };
-            return piece;
-          })
-        };
-        return shipment;
-      })
-    };
+    const user = await this.userProfileService.getUserProfile();
+    if (user !== null) {
+        const orderData: Order = {
+        ...new Order(),
+        clientId: user.id ?? "",
+        priority: formValue.priority,
+        shipmentAddress: { ...formValue.shipmentAddress },
+        deliveryAddress: { ...formValue.deliveryAddress },
+        shipments: formValue.shipments.map((s: any) => {
+          const shipment: Shipment = {
+            id: s.id || '',
+            orderId: '',
+            pieces: s.pieces.map((p: any) => {
+              const piece: Piece = {
+                id: p.id || '',
+                description: p.description,
+                weight: p.weight,
+                height: p.height,
+                width: p.width,
+                length: p.length,
+                shipmentId: 0
+              };
+              return piece;
+            })
+          };
+          return shipment;
+        })
+      };
 
-    this.orderService.createOrder(orderData)
-      .pipe(takeUntil(this.destroyDialogFlag))
-      .subscribe({
-        next: (orderCreated) => {
-          console.info('Order successfully created:', orderCreated);
-          this.dialogReference.close(orderCreated);
-        },
-        error: (err) => {
-          console.error('Failed to create order shipment:', err);
-        }
-      });
+      this.orderService.createOrder(orderData)
+        .pipe(takeUntil(this.destroyDialogFlag))
+        .subscribe({
+          next: (orderCreated) => {
+            console.info('Order successfully created:', orderCreated);
+            this.dialogReference.close(orderCreated);
+          },
+          error: (err) => {
+            console.error('Failed to create order shipment:', err);
+          }
+        });
+      }
   }
 
   public cancelDialog(): void {

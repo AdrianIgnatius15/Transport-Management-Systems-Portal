@@ -42,14 +42,14 @@
           <mat-form-field appearance="outline">
             <mat-label>City</mat-label>
             <input matInput formControlName="city">
-          @if (orderForm.get('shipmentAddress.city')?.hasError('required')) {
-            <mat-error>City required</mat-error>
-          }
-            <mat-label>State/Province</mat-label>
-            <input matInput formControlName="state">
-          @if (orderForm.get('shipmentAddress.state')?.hasError('required')) {
-            <mat-error>State required</mat-error>
-          }
+            @if (orderForm.get('shipmentAddress.city')?.hasError('required')) {
+              <mat-error>City required</mat-error>
+            }
+              <mat-label>State/Province</mat-label>
+              <input matInput formControlName="state">
+            @if (orderForm.get('shipmentAddress.state')?.hasError('required')) {
+              <mat-error>State required</mat-error>
+            }
           </mat-form-field>
         </div>
 
@@ -57,14 +57,14 @@
           <mat-form-field appearance="outline">
             <mat-label>Postal Code</mat-label>
             <input matInput formControlName="postalCode">
-          @if (orderForm.get('shipmentAddress.postalCode')?.hasError('required')) {
-            <mat-error>Postal Code required</mat-error>
-          }
-            <mat-label>Country</mat-label>
-            <input matInput formControlName="country">
-          @if (orderForm.get('shipmentAddress.country')?.hasError('required')) {
-            <mat-error>Country required</mat-error>
-          }
+            @if (orderForm.get('shipmentAddress.postalCode')?.hasError('required')) {
+              <mat-error>Postal Code required</mat-error>
+            }
+              <mat-label>Country</mat-label>
+              <input matInput formControlName="country">
+            @if (orderForm.get('shipmentAddress.country')?.hasError('required')) {
+              <mat-error>Country required</mat-error>
+            }
           </mat-form-field>
         </div>
       </div>
@@ -96,14 +96,14 @@
           <mat-form-field appearance="outline">
             <mat-label>City</mat-label>
             <input matInput formControlName="city">
-          @if (orderForm.get('deliveryAddress.city')?.hasError('required')) {
-            <mat-error>City required</mat-error>
-          }
-            <mat-label>State/Province</mat-label>
-            <input matInput formControlName="state">
-          @if (orderForm.get('deliveryAddress.state')?.hasError('required')) {
-            <mat-error>State required</mat-error>
-          }
+            @if (orderForm.get('deliveryAddress.city')?.hasError('required')) {
+              <mat-error>City required</mat-error>
+            }
+              <mat-label>State/Province</mat-label>
+              <input matInput formControlName="state">
+            @if (orderForm.get('deliveryAddress.state')?.hasError('required')) {
+              <mat-error>State required</mat-error>
+            }
           </mat-form-field>
         </div>
 
@@ -111,14 +111,14 @@
           <mat-form-field appearance="outline">
             <mat-label>Postal Code</mat-label>
             <input matInput formControlName="postalCode">
-          @if (orderForm.get('deliveryAddress.postalCode')?.hasError('required')) {
-            <mat-error>Postal Code required</mat-error>
-          }
+            @if (orderForm.get('deliveryAddress.postalCode')?.hasError('required')) {
+              <mat-error>Postal Code required</mat-error>
+            }
             <mat-label>Country</mat-label>
             <input matInput formControlName="country">
-          @if (orderForm.get('deliveryAddress.country')?.hasError('required')) {
-            <mat-error>Country required</mat-error>
-          }
+            @if (orderForm.get('deliveryAddress.country')?.hasError('required')) {
+              <mat-error>Country required</mat-error>
+            }
           </mat-form-field>
         </div>
       </div>
