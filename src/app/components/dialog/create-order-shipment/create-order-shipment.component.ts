@@ -10,6 +10,8 @@ import { LocationDetails } from '../../../models/locations/location-details';
 import { LocationLookup } from '../../../models/locations/location-lookup';
 import { Piece } from '../../../models/piece';
 import { Shipment } from '../../../models/shipment';
+import { OrderStatus } from '../../../models/enums/order-status';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-create-order-shipment',
@@ -193,7 +195,9 @@ export class CreateOrderShipmentComponent implements OnInit, OnDestroy {
         const orderData: Order = {
         ...new Order(),
         clientId: user.id ?? "",
+        orderNumber: uuidv4(),
         priority: formValue.priority,
+        status: OrderStatus.CREATED,
         shipmentAddress: { ...formValue.shipmentAddress },
         deliveryAddress: { ...formValue.deliveryAddress },
         shipments: formValue.shipments.map((s: any) => {
