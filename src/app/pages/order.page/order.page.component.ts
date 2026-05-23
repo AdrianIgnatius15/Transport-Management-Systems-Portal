@@ -120,7 +120,12 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   public async createOrder() {
     const user = await this.userProfileSvc.getUserProfile();
     if (user !== null) {
-      this.createShipmentOrderDialog.open(CreateOrderShipmentComponent);    
+      const createShipmentDialog = this.createShipmentOrderDialog.open(CreateOrderShipmentComponent);
+      createShipmentDialog.afterClosed().subscribe(data => {
+        if (data) {
+          this.orders.push(data);
+        }
+      })
     }
   }
 
