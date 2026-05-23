@@ -62,6 +62,7 @@ import { CreateOrderShipmentComponent } from './components/dialog/create-order-s
 import { OrderTableActionsComponent } from './components/order-table-actions/order-table-actions.component';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { UpdateOrderShipmentComponent } from './components/dialog/update-order-shipment/update-order-shipment.component';
+import { ViewOrderMapComponent } from './components/dialog/view-order-map/view-order-map.component';
 
 const localhostURLCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:(5181|5230))(\/.*)?$/i
@@ -113,7 +114,8 @@ ModuleRegistry.registerModules([
     CreateOrderShipmentComponent,
     OrderTableActionsComponent,
     SnackbarComponent,
-    UpdateOrderShipmentComponent
+    UpdateOrderShipmentComponent,
+    ViewOrderMapComponent
   ],
   imports: [
     BrowserModule,
