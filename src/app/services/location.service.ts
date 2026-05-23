@@ -4,6 +4,8 @@ import { ErrorHandlerService } from './error-handler.service';
 import { LocationLookup } from '../models/locations/location-lookup';
 import { LocationDetails } from '../models/locations/location-details';
 import { catchError } from 'rxjs';
+import { LocationRoute } from '../models/locations/location-route';
+import { Address } from '../models/address';
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +49,17 @@ export class LocationService {
 
     // 4. Pass the params configuration object into the GET request
     return this.httpClient.get<LocationDetails[]>(`https://nominatim.openstreetmap.org/search`, { params })
+      .pipe(catchError(this.errorHandleSvc.handlingError));
+  }
+
+  public async getRoutesFromGraphhoper(shipmentAddress: Address, destinationAddress: Address) {
+    let params = new HttpParams();
+
+    params = params.set("point", `${shipmentAddress.latitude}-${shipmentAddress.longitude}`);
+    params = params.set("point", `${destinationAddress.latitude}-${destinationAddress.longitude}`);
+    params = params.set("profile", "car");
+
+    return this.httpClient.get<LocationRoute>(`http://localhost:8989/route`, { params: params })
       .pipe(catchError(this.errorHandleSvc.handlingError));
   }
 }
