@@ -6,6 +6,8 @@ import { LocationDetails } from '../models/locations/location-details';
 import { catchError } from 'rxjs';
 import { LocationRoute } from '../models/locations/location-route';
 import { Address } from '../models/address';
+import { DecodedRoute } from '../models/locations/decoded-route';
+import { decode } from "@googlemaps/polyline-codec";
 
 @Injectable({
   providedIn: 'root',
@@ -52,14 +54,28 @@ export class LocationService {
       .pipe(catchError(this.errorHandleSvc.handlingError));
   }
 
-  public async getRoutesFromGraphhoper(shipmentAddress: Address, destinationAddress: Address) {
+  public getRoutesFromGraphhoper(shipmentAddress: Address, deliveryAddress: Address) {
     let params = new HttpParams();
 
-    params = params.set("point", `${shipmentAddress.latitude}-${shipmentAddress.longitude}`);
-    params = params.set("point", `${destinationAddress.latitude}-${destinationAddress.longitude}`);
+    params = params.set("point", `${shipmentAddress.latitude},${shipmentAddress.longitude}`);
+    params = params.set("point", `${deliveryAddress.latitude},${deliveryAddress.longitude}`);
     params = params.set("profile", "car");
 
     return this.httpClient.get<LocationRoute>(`http://localhost:8989/route`, { params: params })
       .pipe(catchError(this.errorHandleSvc.handlingError));
+  }
+
+  private parsePath(path: any): DecodedRoute {
+    const precision = Math.round(Math.log10(path.points_encoded_multiplier ?? 1e5));
+
+    const decoded = decode(path.points, precision);
+    const coordinates: [number, number][] = decoded.map(([lat, lng]) => [lng, lat]);
+
+    return {
+      coordinates,
+      instructions: path.instructions ?? [],
+      distance: path.distance,
+      time: path.time,
+    };
   }
 }
