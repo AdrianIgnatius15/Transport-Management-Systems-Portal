@@ -56,8 +56,8 @@ export class LocationService {
   public getRoutesFromGraphhoper(shipmentAddress: Address, deliveryAddress: Address) {
     let params = new HttpParams();
 
-    params = params.set("point", `${shipmentAddress.latitude},${shipmentAddress.longitude}`);
-    params = params.set("point", `${deliveryAddress.latitude},${deliveryAddress.longitude}`);
+    params = params.append("point", `${shipmentAddress.latitude},${shipmentAddress.longitude}`);
+    params = params.append("point", `${deliveryAddress.latitude},${deliveryAddress.longitude}`);
     params = params.set("profile", "car");
 
     return this.httpClient.get<LocationRoute>(`http://localhost:8989/route`, { params: params })
