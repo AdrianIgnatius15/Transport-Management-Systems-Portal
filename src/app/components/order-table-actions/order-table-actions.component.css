@@ -1,6 +1,9 @@
 .action-container {
     display: flex;
     align-items: center;
-    flex-direction: row;
-    row-gap: 8px;
+    flex-direction: column;
+    height: 50%;
+    gap: 4px;
+    flex-wrap: nowrap;
+    overflow: visible;
 }
