@@ -10,6 +10,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 import { 
   ModuleRegistry, 
@@ -129,6 +130,7 @@ ModuleRegistry.registerModules([
     MatSnackBarModule,
     MatAutocompleteModule,
     MatOptionModule,
+    MatProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     AgGridAngular,
