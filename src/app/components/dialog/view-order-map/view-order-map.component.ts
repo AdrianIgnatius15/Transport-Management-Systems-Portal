@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, Inject, OnDestroy, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { LocationService } from '../../../services/location.service';
 import { Subject, takeUntil } from 'rxjs';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Order } from '../../../models/order';
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -34,12 +34,12 @@ export class ViewOrderMapComponent implements OnInit, OnDestroy {
   constructor(
     private readonly locationService: LocationService,
     private readonly cdr: ChangeDetectorRef,
+    private readonly dialogRef: MatDialogRef<ViewOrderMapComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Order
   ) {}
 
   ngOnInit(): void {
     this.loadingMapAndRouteFlag.set(true);
-
     this.locationService.getRoutesFromGraphhoper(this.data.shipmentAddress, this.data.deliveryAddress)
       .pipe(takeUntil(this.destroyFlagSubject))
       .subscribe(locationRoute => {
@@ -59,6 +59,12 @@ export class ViewOrderMapComponent implements OnInit, OnDestroy {
       layers: [new TileLayer({ source: new OSM() })],
       view: new View({ center: fromLonLat([0, 0]), zoom: 2 })
     });
+
+    this.dialogRef.afterOpened()
+        .pipe(takeUntil(this.destroyFlagSubject))
+      .subscribe(() => {
+        this.map.updateSize();
+      });
   }
 
   private renderRoute() {
