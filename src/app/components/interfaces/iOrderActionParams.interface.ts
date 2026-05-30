@@ -4,4 +4,5 @@ import { Order } from '../../models/order';
 export interface IOrderActionParams extends ICellRendererParams {
     onEditOrder: (data: Order) => void;
     onDeleteOrder: (data: Order) => void;
+    onViewOrderRoute: (data: Order) => void;
 }

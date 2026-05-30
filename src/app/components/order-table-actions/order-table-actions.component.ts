@@ -27,4 +27,8 @@ export class OrderTableActionsComponent implements ICellRendererAngularComp {
     this.params.onEditOrder(this.params.data);
   }
 
+  onViewShipmentRoute() {
+    this.params.onViewOrderRoute(this.params.data);
+  }
+
 }
