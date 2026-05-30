@@ -7,6 +7,7 @@ import { catchError } from 'rxjs';
 import { LocationRoute } from '../models/locations/location-route';
 import { Address } from '../models/address';
 import { decode } from "@googlemaps/polyline-codec";
+import { fromLonLat } from 'ol/proj';
 
 @Injectable({
   providedIn: 'root',
@@ -68,9 +69,8 @@ export class LocationService {
     const precision = Math.round(Math.log10(path.points_encoded_multiplier ?? 1e5));
 
     const decoded = decode(path.points, precision);
-    const coordinates: [number, number][] = decoded.map(([lat, lng]) => [lng, lat]);
 
-    return coordinates;
+    return decoded.map(([lat, lng]) => fromLonLat([lng, lat]) as [number, number]);
 
     // return {
     //   coordinates,
