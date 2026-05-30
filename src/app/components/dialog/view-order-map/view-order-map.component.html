@@ -1,1 +1,54 @@
-<p>view-order-map works!</p>
+<h2 mat-dialog-title>Order Route — #{{ data.orderNumber }}</h2>
+
+<mat-dialog-content>
+
+  <!-- Loading state -->
+  @if (loadingMapAndRouteFlag()) {
+    <div class="loading-state">
+      <mat-spinner diameter="48" />
+      <p>Fetching route…</p>
+    </div>
+  }
+
+  <!-- Map + info (hidden while loading so the div exists for OL to target) -->
+  <div [hidden]="loadingMapAndRouteFlag()">
+
+    <!-- Route summary chips -->
+    @if (locationRoute !== null && locationRoute.paths[0]) {
+      <div class="route-summary">
+        <span class="chip">
+          🛣 {{ formatDistance(locationRoute.paths[0].distance) }}
+        </span>
+        <span class="chip">
+          ⏱ {{ formatTime(locationRoute.paths[0].time) }}
+        </span>
+      </div>
+    }
+
+    <!-- OpenLayers map target -->
+    <div #mapEl class="map-container"></div>
+
+    <!-- Turn-by-turn instructions -->
+    @if (locationRoute !== null && locationRoute.paths[0]?.instructions?.length) {
+      <div class="instructions">
+        <h4>Turn-by-turn directions</h4>
+        <ol>
+          @for (step of locationRoute.paths[0].instructions; track $index) {
+            @if (step.sign !== 4) {
+              <li>
+                <span class="step-text">{{ step.text }}</span>
+                <small>{{ formatDistance(step.distance) }}</small>
+              </li>
+            }
+          }
+        </ol>
+      </div>
+    }
+
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button matButton mat-dialog-close>Close</button>
+</mat-dialog-actions>
