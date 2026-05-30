@@ -52,6 +52,9 @@ export class OrderPageComponent implements OnInit, OnDestroy {
     { 
       headerName: "Actions",
       cellRenderer: OrderTableActionsComponent,
+      minWidth: 720,
+      sortable: false,
+      resizable: false,
       cellRendererParams: {
         onDeleteOrder: (data: Order) => this.deleteOrder(data),
         onEditOrder: (data: Order) => this.updateOrder(data),
