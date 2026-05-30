@@ -6,8 +6,8 @@ export class LocationPath {
     time: number = 0;
     transfers: number = 0;
     legs: any[] = []
-    points_encoded: boolean = false;
-    points_encoded_multiplier: number = 0;
+    points_encoded: boolean = true;
+    points_encoded_multiplier: number = 1e5;
     bbox: number[] = [];
     points: string = ""
     instructions: LocationInstruction[] = [];
