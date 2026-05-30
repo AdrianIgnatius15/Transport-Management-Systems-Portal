@@ -123,7 +123,10 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   public async createOrder() {
     const user = await this.userProfileSvc.getUserProfile();
     if (user !== null) {
-      const createShipmentDialog = this.createShipmentOrderDialog.open(CreateOrderShipmentComponent);
+      const createShipmentDialog = this.createShipmentOrderDialog.open(CreateOrderShipmentComponent, {
+        width: 'min(1000px, 96vw)',
+        maxHeight: '92vh'
+      });
       createShipmentDialog.afterClosed().subscribe(data => {
         if (data) {
           this.orders.push(data);
@@ -141,7 +144,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   public viewOrderShipmentRoute(orderData: Order) {
     this.viewOrderMapDialog.open(ViewOrderMapComponent, {
       data: orderData,
-      width: '920px',
+      width: 'min(720px, 95vw)',
       maxHeight: '90vh'
     });
   }

@@ -2,30 +2,29 @@
 
 <form [formGroup]="orderForm" (ngSubmit)="createOrderShipment()">
   <mat-dialog-content class="dialog-content">
-    
+
     <div class="row-section">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Order Priority</mat-label>
         <input matInput formControlName="priority" placeholder="e.g. Standard, Express, High">
         @if (orderForm.get("priority")?.hasError("required")) {
-            <mat-error>Priority designation is required</mat-error>
+          <mat-error>Priority designation is required</mat-error>
         }
       </mat-form-field>
     </div>
 
     <div class="address-grid">
-      
+
+      <!-- ── Origin ─────────────────────────────────────────── -->
       <div class="address-column" formGroupName="shipmentAddress">
-        <h3>Origin (Shipment Address)</h3>
-        
+        <h3>📦 Origin — Shipment Address</h3>
+
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Address Line 1</mat-label>
           <input matInput formControlName="line1" [matAutocomplete]="autoShipment" placeholder="Type to search street...">
           <mat-autocomplete #autoShipment="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onShipmentAddressSelected($event)">
             @for (loc of filteredLocationsForShipment | async; track loc.place_id) {
-              <mat-option [value]="loc">
-                {{ loc.display_name }}
-              </mat-option>
+              <mat-option [value]="loc">{{ loc.display_name }}</mat-option>
             }
           </mat-autocomplete>
           @if (orderForm.get('shipmentAddress.line1')?.hasError('required')) {
@@ -35,7 +34,7 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Address Line 2 (Optional)</mat-label>
-          <input matInput formControlName="line2" placeholder="Suite, Apt, Bld">
+          <input matInput formControlName="line2" placeholder="Suite, Apt, Unit">
         </mat-form-field>
 
         <div class="field-row">
@@ -45,8 +44,11 @@
             @if (orderForm.get('shipmentAddress.city')?.hasError('required')) {
               <mat-error>City required</mat-error>
             }
-              <mat-label>State/Province</mat-label>
-              <input matInput formControlName="state">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>State / Province</mat-label>
+            <input matInput formControlName="state">
             @if (orderForm.get('shipmentAddress.state')?.hasError('required')) {
               <mat-error>State required</mat-error>
             }
@@ -60,8 +62,11 @@
             @if (orderForm.get('shipmentAddress.postalCode')?.hasError('required')) {
               <mat-error>Postal Code required</mat-error>
             }
-              <mat-label>Country</mat-label>
-              <input matInput formControlName="country">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <input matInput formControlName="country">
             @if (orderForm.get('shipmentAddress.country')?.hasError('required')) {
               <mat-error>Country required</mat-error>
             }
@@ -69,17 +74,16 @@
         </div>
       </div>
 
+      <!-- ── Destination ────────────────────────────────────── -->
       <div class="address-column" formGroupName="deliveryAddress">
-        <h3>Destination (Delivery Address)</h3>
-        
+        <h3>🚚 Destination — Delivery Address</h3>
+
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Address Line 1</mat-label>
           <input matInput formControlName="line1" [matAutocomplete]="autoDelivery" placeholder="Type to search street...">
           <mat-autocomplete #autoDelivery="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onDeliveryAddressSelected($event)">
             @for (loc of filteredLocationsForDelivery | async; track loc.place_id) {
-              <mat-option [value]="loc">
-                {{ loc.display_name }}
-              </mat-option>
+              <mat-option [value]="loc">{{ loc.display_name }}</mat-option>
             }
           </mat-autocomplete>
           @if (orderForm.get('deliveryAddress.line1')?.hasError('required')) {
@@ -89,7 +93,7 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Address Line 2 (Optional)</mat-label>
-          <input matInput formControlName="line2" placeholder="Suite, Apt, Bld">
+          <input matInput formControlName="line2" placeholder="Suite, Apt, Unit">
         </mat-form-field>
 
         <div class="field-row">
@@ -99,8 +103,11 @@
             @if (orderForm.get('deliveryAddress.city')?.hasError('required')) {
               <mat-error>City required</mat-error>
             }
-              <mat-label>State/Province</mat-label>
-              <input matInput formControlName="state">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>State / Province</mat-label>
+            <input matInput formControlName="state">
             @if (orderForm.get('deliveryAddress.state')?.hasError('required')) {
               <mat-error>State required</mat-error>
             }
@@ -114,6 +121,9 @@
             @if (orderForm.get('deliveryAddress.postalCode')?.hasError('required')) {
               <mat-error>Postal Code required</mat-error>
             }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
             <mat-label>Country</mat-label>
             <input matInput formControlName="country">
             @if (orderForm.get('deliveryAddress.country')?.hasError('required')) {
@@ -122,13 +132,15 @@
           </mat-form-field>
         </div>
       </div>
+
     </div>
 
+    <!-- ── Shipments ────────────────────────────────────────── -->
     <div class="shipments-section" formArrayName="shipments">
       <div class="section-header">
         <h3>Shipments Consignment Inventory</h3>
         <button mat-stroked-button color="primary" type="button" (click)="addShipment()">
-          + Add Additional Consignment/Shipment
+          + Add Consignment
         </button>
       </div>
 
@@ -137,75 +149,83 @@
           <div class="shipment-card-title">
             <h4>Consignment Package Set #{{ shipments.controls.indexOf(shipment) + 1 }}</h4>
             @if (shipments.controls.length > 1) {
-              <button mat-button color="warn" type="button" (click)="removeShipment(shipments.controls.indexOf(shipment))">
-                Remove Consignment Set
+              <button mat-button color="warn" type="button"
+                (click)="removeShipment(shipments.controls.indexOf(shipment))">
+                Remove Set
               </button>
             }
           </div>
 
           <div formArrayName="pieces" class="pieces-container">
             <div class="pieces-header">
-              <h5>Dimensional Freight Pieces Specifications</h5>
-              <button mat-flat-button color="accent" type="button" class="btn-small" (click)="addPiece(shipments.controls.indexOf(shipment))">
-                + Append Package Piece
+              <h5>Freight Pieces Specifications</h5>
+              <button mat-flat-button color="accent" type="button" class="btn-small"
+                (click)="addPiece(shipments.controls.indexOf(shipment))">
+                + Add Piece
               </button>
             </div>
 
             @for (piece of getPieces(shipments.controls.indexOf(shipment)).controls; track piece) {
-              <div [formGroupName]="getPieces(shipments.controls.indexOf(shipment)).controls.indexOf(piece)" class="piece-row">
-                <span class="piece-number">#{{ getPieces(shipments.controls.indexOf(shipment)).controls.indexOf(piece) + 1 }}</span>
+              @let si = shipments.controls.indexOf(shipment);
+              @let pi = getPieces(si).controls.indexOf(piece);
+              <div [formGroupName]="pi" class="piece-row">
+
+                <span class="piece-number">#{{ pi + 1 }}</span>
 
                 <mat-form-field appearance="outline" class="flex-3">
                   <mat-label>Item Description</mat-label>
-                  <input matInput formControlName="description" placeholder="e.g. Crate, Wooden Pallet, Electronics Box">
-                  @if (getPieces(shipments.controls.indexOf(shipment)).at(getPieces(shipments.controls.indexOf(shipment)).controls.indexOf(piece)).get('description')?.hasError('required')) {
+                  <input matInput formControlName="description" placeholder="e.g. Crate, Pallet">
+                  @if (getPieces(si).at(pi).get('description')?.hasError('required')) {
                     <mat-error>Required</mat-error>
                   }
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="flex-1">
+                <mat-form-field appearance="outline">
                   <mat-label>Weight (kg)</mat-label>
                   <input matInput type="number" formControlName="weight">
-                  @if (getPieces(shipments.controls.indexOf(shipment)).at(getPieces(shipments.controls.indexOf(shipment)).controls.indexOf(piece)).get('weight')?.hasError('required')) {
+                  @if (getPieces(si).at(pi).get('weight')?.hasError('required')) {
                     <mat-error>Required</mat-error>
                   }
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="flex-1">
-                  <mat-label>Length (cm)</mat-label>
-                  <input matInput type="number" formControlName="length">
-                  @if (getPieces(shipments.controls.indexOf(shipment)).at(getPieces(shipments.controls.indexOf(shipment)).controls.indexOf(piece)).get('length')?.hasError('required')) {
-                    <mat-error>Required</mat-error>
-                  }
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" class="flex-1">
-                  <mat-label>Width (cm)</mat-label>
-                  <input matInput type="number" formControlName="width">
-                  @if (getPieces(shipments.controls.indexOf(shipment)).at(getPieces(shipments.controls.indexOf(shipment)).controls.indexOf(piece)).get('width')?.hasError('required')) {
-                    <mat-error>Required</mat-error>
-                  }
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" class="flex-1">
-                  <mat-label>Height (cm)</mat-label>
-                  <input matInput type="number" formControlName="height">
-                  @if (getPieces(shipments.controls.indexOf(shipment)).at(getPieces(shipments.controls.indexOf(shipment)).controls.indexOf(piece)).get('height')?.hasError('required')) {
-                    <mat-error>Required</mat-error>
-                  }
-                </mat-form-field>
-
-                @if (getPieces(shipments.controls.indexOf(shipment)).length > 1) {
-                  <button mat-button color="warn" type="button" class="btn-remove-row" (click)="removePiece(shipments.controls.indexOf(shipment), getPieces(shipments.controls.indexOf(shipment)).controls.indexOf(piece))">
+                @if (getPieces(si).length > 1) {
+                  <button mat-icon-button color="warn" type="button" class="btn-remove-row"
+                    (click)="removePiece(si, pi)" aria-label="Remove piece">
                     ✕
                   </button>
                 }
+
+                <!-- Dimensions on their own full-width row -->
+                <div class="piece-dimensions">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Length (cm)</mat-label>
+                    <input matInput type="number" formControlName="length">
+                    @if (getPieces(si).at(pi).get('length')?.hasError('required')) {
+                      <mat-error>Required</mat-error>
+                    }
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Width (cm)</mat-label>
+                    <input matInput type="number" formControlName="width">
+                    @if (getPieces(si).at(pi).get('width')?.hasError('required')) {
+                      <mat-error>Required</mat-error>
+                    }
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Height (cm)</mat-label>
+                    <input matInput type="number" formControlName="height">
+                    @if (getPieces(si).at(pi).get('height')?.hasError('required')) {
+                      <mat-error>Required</mat-error>
+                    }
+                  </mat-form-field>
+                </div>
               </div>
             }
           </div>
         </div>
       }
-
     </div>
 
   </mat-dialog-content>
