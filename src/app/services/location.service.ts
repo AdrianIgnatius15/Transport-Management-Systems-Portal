@@ -6,7 +6,6 @@ import { LocationDetails } from '../models/locations/location-details';
 import { catchError } from 'rxjs';
 import { LocationRoute } from '../models/locations/location-route';
 import { Address } from '../models/address';
-import { DecodedRoute } from '../models/locations/decoded-route';
 import { decode } from "@googlemaps/polyline-codec";
 
 @Injectable({
@@ -65,17 +64,19 @@ export class LocationService {
       .pipe(catchError(this.errorHandleSvc.handlingError));
   }
 
-  private parsePath(path: any): DecodedRoute {
+  public parsePath(path: any) {
     const precision = Math.round(Math.log10(path.points_encoded_multiplier ?? 1e5));
 
     const decoded = decode(path.points, precision);
     const coordinates: [number, number][] = decoded.map(([lat, lng]) => [lng, lat]);
 
-    return {
-      coordinates,
-      instructions: path.instructions ?? [],
-      distance: path.distance,
-      time: path.time,
-    };
+    return coordinates;
+
+    // return {
+    //   coordinates,
+    //   instructions: path.instructions ?? [],
+    //   distance: path.distance,
+    //   time: path.time,
+    // };
   }
 }
