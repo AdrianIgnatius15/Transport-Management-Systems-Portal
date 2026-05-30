@@ -141,7 +141,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   public viewOrderShipmentRoute(orderData: Order) {
     this.viewOrderMapDialog.open(ViewOrderMapComponent, {
       data: orderData,
-      width: '720px',
+      width: '920px',
       maxHeight: '90vh'
     });
   }
