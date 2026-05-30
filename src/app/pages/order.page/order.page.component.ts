@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateOrderShipmentComponent } from '../../components/dialog/create-order-shipment/create-order-shipment.component';
 import { UpdateOrderShipmentComponent } from '../../components/dialog/update-order-shipment/update-order-shipment.component';
 import { Address } from '../../models/address';
+import { ViewOrderMapComponent } from '../../components/dialog/view-order-map/view-order-map.component';
 
 @Component({
   selector: 'app-order.page',
@@ -53,7 +54,8 @@ export class OrderPageComponent implements OnInit, OnDestroy {
       cellRenderer: OrderTableActionsComponent,
       cellRendererParams: {
         onDeleteOrder: (data: Order) => this.deleteOrder(data),
-        onEditOrder: (data: Order) => this.updateOrder(data)
+        onEditOrder: (data: Order) => this.updateOrder(data),
+        onViewOrderRoute: (data: Order) => this.viewOrderShipmentRoute(data)
       }
     }
   ];
@@ -76,9 +78,10 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   constructor(
     private readonly userProfileSvc: UserProfileService,
     private readonly orderService: OrderService,
-    private updateUserProfileDialog: MatDialog,
-    private createShipmentOrderDialog: MatDialog,
-    private updateShipmentOrderDialog: MatDialog
+    private readonly updateUserProfileDialog: MatDialog,
+    private readonly createShipmentOrderDialog: MatDialog,
+    private readonly updateShipmentOrderDialog: MatDialog,
+    private readonly viewOrderMapDialog: MatDialog
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -132,6 +135,14 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   public updateOrder(dataToUpdate: Order) {
     this.updateShipmentOrderDialog.open(UpdateOrderShipmentComponent, {
       data: dataToUpdate 
+    });
+  }
+
+  public viewOrderShipmentRoute(orderData: Order) {
+    this.viewOrderMapDialog.open(ViewOrderMapComponent, {
+      data: orderData,
+      width: '720px',
+      maxHeight: '90vh'
     });
   }
 
