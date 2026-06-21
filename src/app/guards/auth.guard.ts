@@ -20,7 +20,7 @@ const checkAccess = async (
   authData: AuthGuardData
 ): Promise<boolean | UrlTree> => {
   const router = inject(Router);
-  const { authenticated, grantedRoles } = authData;
+  const { authenticated, grantedRoles, keycloak } = authData;
 
   // Case 1: Route requires NO authentication (e.g., login page)
   // Redirect logged-in users away from login
@@ -39,11 +39,19 @@ const checkAccess = async (
   // Case 3: Check for required role (RBAC)
   const requiredRole = route.data['role'];
   if (requiredRole) {
-    const hasRequiredRole = (role: string): boolean =>
-      Object.values(grantedRoles.realmRoles).some((roles) => roles.includes(role));
+    // const hasRequiredRole = (role: string): boolean =>
+    //   Object.values(grantedRoles.realmRoles).some((roles) => roles.includes(role));
+    if (grantedRoles.resourceRoles?.[`${keycloak.clientId}`]) {
+      const hasRequiredRole = (role: string): boolean =>
+        Object.values(grantedRoles.resourceRoles[`${keycloak.clientId}`]).some(roles => roles.toLowerCase() === role);
+      
+      console.log("Has required role", grantedRoles.resourceRoles[`${keycloak.clientId}`]);
 
-    if (!hasRequiredRole(requiredRole)) {
-      return router.parseUrl('/forbidden');
+      if (!hasRequiredRole(requiredRole)) {
+        return router.parseUrl('/forbidden');
+      }
+    } else {
+      router.parseUrl("/forbidden");
     }
   }
 
