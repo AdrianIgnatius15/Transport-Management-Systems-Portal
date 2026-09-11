@@ -51,7 +51,7 @@ const checkAccess = async (
         return router.parseUrl('/forbidden');
       }
     } else {
-      router.parseUrl("/forbidden");
+      return router.parseUrl('/forbidden');
     }
   }
 
