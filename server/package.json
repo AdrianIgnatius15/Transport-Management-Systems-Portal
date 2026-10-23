@@ -1,0 +1,16 @@
+{
+    "name": "tms-customer-portal-server-application",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "dependencies": {
+        "express": "^5.1.0",
+        "mime": "^4.1.0",
+        "helmet": "^8.1.0",
+        "crypto": "^1.0.1",
+        "fs": "^0.0.1-security",
+        "compression": "^1.8.1",
+        "ejs": "^3.1.10",
+        "path": "^0.12.7"
+    }
+}
