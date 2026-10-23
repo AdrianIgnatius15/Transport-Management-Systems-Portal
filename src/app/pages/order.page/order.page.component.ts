@@ -132,7 +132,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
       });
       createShipmentDialog.afterClosed().subscribe(data => {
         if (data) {
-          this.orders.push(data);
+          this.orders = [...this.orders, data];
         }
       })
     }
