@@ -141,7 +141,7 @@ ModuleRegistry.registerModules([
     ),
     provideKeycloak({
       config: {
-        url: "http://127.0.0.1:8080/",
+        url: "http://keycloak:8080/",
         realm: "transportation-management-system",
         clientId: "tms-customer-portal-3865"
       },

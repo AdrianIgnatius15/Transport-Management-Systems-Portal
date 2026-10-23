@@ -18,27 +18,27 @@ export class OrderService {
   ) { }
 
   public getAllOrdersByEmail(email: string, pagination: Pagination) {
-    return this.httpClient.post<Order[]>(`http://localhost:5230/api/order?email=${email}`, pagination)
+    return this.httpClient.post<Order[]>(`http://order-service-rest-api:5230/api/order?email=${email}`, pagination)
       .pipe(catchError(this.errorHandlerSvc.handlingError));
   }
 
   public getAllOrdersByShipperIdPaginated(shipperId: string, parameters: PaginationOrderSearchParamters) {
-    return this.httpClient.get<PaginatedOrdersReadDto>(`http://localhost:5230/api/order/all/shipperid?pageNumber=${parameters.pageNumber}&pageSize=${parameters.pageSize}&id=${shipperId}`)
+    return this.httpClient.get<PaginatedOrdersReadDto>(`http://order-service-rest-api:5230/api/order/all/shipperid?pageNumber=${parameters.pageNumber}&pageSize=${parameters.pageSize}&id=${shipperId}`)
       .pipe(catchError(this.errorHandlerSvc.handlingError));
   }
 
   public createOrder(order: Order) {
-    return this.httpClient.post<Order>(`http://localhost:5230/api/order/create`, order)
+    return this.httpClient.post<Order>(`http://order-service-rest-api:5230/api/order/create`, order)
       .pipe(catchError(this.errorHandlerSvc.handlingError));
   }
 
   public updateOrder(orderId: string, order: Order) {
-    return this.httpClient.patch<Order>(`http://localhost:5230/api/order/${orderId}`, order)
+    return this.httpClient.patch<Order>(`http://order-service-rest-api:5230/api/order/${orderId}`, order)
       .pipe(catchError(this.errorHandlerSvc.handlingError));
   }
 
   public deleteOrder(order: Order) {
-    return this.httpClient.delete(`http://localhost:5230/api/order/${order.id}`)
+    return this.httpClient.delete(`http://order-service-rest-api:5230/api/order/${order.id}`)
       .pipe(catchError(this.errorHandlerSvc.handlingError));
   }
 }
