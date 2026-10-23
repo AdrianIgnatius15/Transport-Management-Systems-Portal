@@ -1,10 +1,17 @@
-const express = require("express");
-const path = require("path");
-const crypto = require("crypto");
-const fs = require("fs");
-const compression = require("compression");
-const ejs = require("ejs");
-const helmet = require("helmet");
+// const express = require("express");
+// const path = require("path");
+// const crypto = require("crypto");
+// const fs = require("fs");
+// const compression = require("compression");
+// const ejs = require("ejs");
+// const helmet = require("helmet");
+import express from "express";
+import path from "path";
+import crypto from "crypto";
+import fs from "fs";
+import compression from "compression";
+import ejs from "ejs";
+import helmet from "helmet";
 
 const app = express();
 const cspNonce = crypto.randomBytes(16).toString("hex");
