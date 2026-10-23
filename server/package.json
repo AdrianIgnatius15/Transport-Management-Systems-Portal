@@ -2,7 +2,7 @@
     "name": "tms-customer-portal-server-application",
     "version": "0.0.0",
     "private": true,
-    "type": "module",
+    "type": "commonjs",
     "dependencies": {
         "express": "^5.1.0",
         "mime": "^4.1.0",
