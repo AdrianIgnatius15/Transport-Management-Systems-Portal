@@ -1,5 +1,5 @@
 ## Build staging
-FROM node:26-alpine AS build
+FROM node:alpine AS build
 
 # Set workind directory
 WORKDIR /app
@@ -13,25 +13,15 @@ COPY . .
 RUN npm run build -- --configuration production
 
 ## Run the application
-FROM node:26-alpine
+FROM nginx:alpine
 
-# Set the working directory
-WORKDIR /app
+# Copy the Angular browser build to NGINX's document root
+COPY --from=build /app/dist/tms-portal/browser/ /usr/share/nginx/html/
 
-# Copy only the server package files
-COPY server/package*json ./server/
+# Configure NGINX to listen on the container port used by Compose
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Install server dependencies using npm ci
-RUN cd server && npm install --omit=dev
+EXPOSE 4200
 
-# Copy built Angular app from Stage 1
-COPY --from=build /app/dist/* ./server/public/
-
-# Copy Express server code
-COPY server ./server
-
-# Expose port
-EXPOSE 8080
-
-# Start Express server
-CMD ["node", "server/server.js"]
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
